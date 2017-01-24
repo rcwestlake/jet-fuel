@@ -1,3 +1,4 @@
+const checkIfExists = require('./helpers/server-helpers')
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -57,19 +58,15 @@ app.post('/folders/:name', (req, res) => {
   const { url } = req.body
   const date = Date.now()
   const count = 0
+
   const shortURL = md5(url)
   const folder = app.locals.folders[name]
-  const result = Object.keys(folder).map((item) => {
-    return folder[item].map((prop) => {
-      if(prop.url === url) {
-        res.sendStatus(404)
-      }
-    })
-  })
+
+  checkIfExists(folder, url, res)
 
   const newURL = app.locals.folders[name][shortURL] = [{ url, date, count }]
 
-  res.json(folder)
+  res.json({ shortURL, newURL })
 })
 
 app.listen(app.get('port'), () => {
