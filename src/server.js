@@ -24,28 +24,28 @@ app.locals.folders = [
 
 app.locals.urls = [
   {
-    urlKey: '1235jdflkas;',
+    urlKey: '1235jdflkas',
     url: 'www.espn.com',
     date: '21234333',
     count: 0,
     folder_id: 1
   },
   {
-    urlKey: '900920sdhkf;',
+    urlKey: '900920sdhkf',
     url: 'www.football.com',
     date: '3903393',
     count: 0,
     folder_id: 1
   },
   {
-    urlKey: '9938dfnkasla;',
+    urlKey: '9938dfnkasla',
     url: 'www.fox.com',
     date: '4848444',
     count: 0,
     folder_id: 2
   },
   {
-    urlKey: '7383jadfs;',
+    urlKey: '7383jadfs',
     url: 'www.cnn.com',
     date: '13930303',
     count: 0,
@@ -69,6 +69,19 @@ app.post('/folders', (req, res) => {
   res.json({ id, title })
 })
 
+app.get('/folders/:id', (req, res) => {
+  const { id } = req.params
+  const folder = app.locals.folders.filter((folder) => {
+     return folder.id == id
+  })
+
+  if(!folder.length) {
+    res.sendStatus(404)
+  }
+
+  res.json(folder)
+})
+
 app.get('/urls', (req, res) => {
   res.json(app.locals.urls)
 })
@@ -76,7 +89,7 @@ app.get('/urls', (req, res) => {
 app.get('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
   const urls = app.locals.urls.filter(url => {
-    return url.folder_id == id
+    return url.folder_id == folder_id
   })
 
   if(!urls.length) res.sendStatus(404)
@@ -99,26 +112,13 @@ app.post('/urls/:folder_id', (req, res) => {
   res.json({ urlKey, url, date, count, folder_id })
 })
 
-app.get('/folders/:id', (req, res) => {
-  const { id } = req.params
-  const folder = app.locals.folders.filter((folder) => {
-     return folder.id == id
-  })
+app.patch('/urls/:folder_id/:urlKey', (req, res) => {
+  const { folder_id, urlKey } = req.params
+  const selectedURL = app.locals.urls.find((item) => item.urlKey == urlKey)
+  const count = selectedURL.count++
+  const url = selectedURL.url
 
-  if(!folder.length) {
-    res.sendStatus(404)
-  }
-
-  res.json(folder)
-})
-
-app.patch('/folders/:name/:urlKey', (req, res) => {
-  const { name, urlKey } = req.params
-  const shortURL = app.locals.folders[name][urlKey]
-  const count = shortURL[0].count++
-  const url = shortURL[0].url
-
-  res.json(url)
+  res.json(selectedURL)
 })
 
 app.listen(app.get('port'), () => {
