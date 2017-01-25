@@ -54,7 +54,7 @@ app.locals.urls = [
 ]
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Welcome to Irwyn');
 });
 
 app.get('/folders', (req, res) => {
@@ -73,13 +73,30 @@ app.get('/urls', (req, res) => {
   res.json(app.locals.urls)
 })
 
-app.get('/urls/:id', (req, res) => {
-  const { id } = req.params
+app.get('/urls/:folder_id', (req, res) => {
+  const { folder_id } = req.params
   const urls = app.locals.urls.filter(url => {
     return url.folder_id == id
   })
 
+  if(!urls.length) res.sendStatus(404)
+
   res.json(urls)
+})
+
+app.post('/urls/:folder_id', (req, res) => {
+  const { folder_id } = req.params
+  const { url } = req.body
+
+  const urlKey = md5(url)
+  const date = Date.now()
+  const count = 0
+
+  checkIfExists(app.locals.urls, url, res)
+
+  app.locals.urls.push({ urlKey, url, date, count, folder_id })
+
+  res.json({ urlKey, url, date, count, folder_id })
 })
 
 app.get('/folders/:id', (req, res) => {
@@ -93,22 +110,6 @@ app.get('/folders/:id', (req, res) => {
   }
 
   res.json(folder)
-})
-
-app.post('/folders/:name', (req, res) => {
-  const { name } = req.params
-  const { url } = req.body
-  const date = Date.now()
-  const count = 0
-
-  const urlKey = md5(url)
-  const folder = app.locals.folders[name]
-
-  checkIfExists(folder, url, res)
-
-  const shortURL = app.locals.folders[name][urlKey] = [{ url, date, count }]
-
-  res.json({ urlKey, shortURL })
 })
 
 app.patch('/folders/:name/:urlKey', (req, res) => {
