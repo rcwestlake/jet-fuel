@@ -4,20 +4,27 @@ import Input from './components/Input'
 import axios from 'axios'
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
-      input: ''
+      folders: [],
+      folderInput: ''
     }
   }
 
-  handleChange(location){
-    let userInput = location.target.value;
-    this.setState({input: userInput});
+  componentDidMount() {
+    axios.get('http://localhost:3001/folders')
+    .then((response) => this.setState({folders: response.data}))
+    .catch((error) => console.error(error))
   }
 
-  addFolder(){
-    const folder = this.state.input
+  handleChange(location) {
+    let userInput = location.target.value;
+    this.setState({folderInput: userInput});
+  }
+
+  addFolder() {
+    const folder = this.state.folderInput
 
     axios.post(('http://localhost:3001/folders'), { title: folder })
     .then((response) => console.log(response))

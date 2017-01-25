@@ -13,4 +13,4 @@ class Input extends Component {
   }
 };
 
-module.exports = Input;
+export default Input;
