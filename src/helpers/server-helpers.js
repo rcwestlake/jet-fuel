@@ -1,10 +1,7 @@
 module.exports = checkIfExists = (arr, param, res) => {
   arr.map((item) => {
-    console.log(item)
-    if (item.url == param) {
-      res.sendStatus(404)
-    }
-    if (item.title == param) {
+    if (item.url == param || item.title == param) {
+      console.log('it hit')
       res.sendStatus(404)
     }
   })

@@ -71,9 +71,9 @@ app.post('/folders', (req, res) => {
   const { title } = req.body
   const id = app.locals.folders.length + 1
 
-  checkIfExists(app.locals.folders, title, res)
-  app.locals.folders.push({ id, title })
+  checkIfExists(app.locals.folders, title, res) 
 
+  app.locals.folders.push({ id, title })
   res.json({ id, title })
 })
 
@@ -131,4 +131,4 @@ app.patch('/urls/:folder_id/:urlKey', (req, res) => {
 
 app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3001!');
-});
+})

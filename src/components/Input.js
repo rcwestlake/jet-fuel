@@ -5,7 +5,8 @@ class Input extends Component {
     return(
       <span>
         <input
-        placeholder="Enter your guess!"
+        value={this.props.folderInput}
+        placeholder="Enter a folder"
         onChange={(event) => this.props.handleChange(event)}
         />
       </span>
