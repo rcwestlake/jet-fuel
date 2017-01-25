@@ -62,16 +62,34 @@ app.get('/folders', (req, res) => {
 });
 
 app.post('/folders', (req, res) => {
-  const { name } = req.body
-  const folder = app.locals.folders[name] = {}
-  res.json(folder)
+  const { title } = req.body
+  const uid = app.locals.folders.length + 1
+  console.log(uid)
+  app.locals.folders[uid] = { uid, title }
+
+  res.json({ uid, title })
 })
 
-app.get('/folders/:name', (req, res) => {
-  const { name } = req.params
-  const folder = app.locals.folders[name]
+app.get('/urls', (req, res) => {
+  res.json(app.locals.urls)
+})
 
-  if(!folder) {
+app.get('/urls/:id', (req, res) => {
+  const { id } = req.params
+  const urls = app.locals.urls.filter(url => {
+    return url.folder_id == id
+  })
+
+  res.json(urls)
+})
+
+app.get('/folders/:id', (req, res) => {
+  const { id } = req.params
+  const folder = app.locals.folders.filter((folder) => {
+     return folder.id == id
+  })
+
+  if(!folder.length) {
     res.sendStatus(404)
   }
 
