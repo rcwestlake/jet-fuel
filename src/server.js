@@ -11,22 +11,47 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.locals.folders = {
-  fone: {
-    url1: [
-      {
-        url: 'www.espn.com'
-      }
-    ]
+app.locals.folders = [
+  {
+    id: 1,
+    title: 'sports'
   },
-  ftwo: {
-    url2: [
-      {
-        url: 'www.facebook.com'
-      }
-    ]
+  {
+    id: 2,
+    title: 'news'
   }
-}
+]
+
+app.locals.urls = [
+  {
+    urlKey: '1235jdflkas;',
+    url: 'www.espn.com',
+    date: '21234333',
+    count: 0,
+    folder_id: 1
+  },
+  {
+    urlKey: '900920sdhkf;',
+    url: 'www.football.com',
+    date: '3903393',
+    count: 0,
+    folder_id: 1
+  },
+  {
+    urlKey: '9938dfnkasla;',
+    url: 'www.fox.com',
+    date: '4848444',
+    count: 0,
+    folder_id: 2
+  },
+  {
+    urlKey: '7383jadfs;',
+    url: 'www.cnn.com',
+    date: '13930303',
+    count: 0,
+    folder_id: 2
+  }
+]
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
