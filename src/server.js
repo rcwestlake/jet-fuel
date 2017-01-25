@@ -69,9 +69,10 @@ app.post('/folders/:name', (req, res) => {
   res.json({ urlKey, shortURL })
 })
 
-app.get('/folders/:name/:urlKey', (req, res) => {
+app.patch('/folders/:name/:urlKey', (req, res) => {
   const { name, urlKey } = req.params
   const shortURL = app.locals.folders[name][urlKey]
+  const count = shortURL[0].count++
   const url = shortURL[0].url
 
   res.json(url)
