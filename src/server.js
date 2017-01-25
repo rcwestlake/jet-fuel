@@ -63,11 +63,10 @@ app.get('/folders', (req, res) => {
 
 app.post('/folders', (req, res) => {
   const { title } = req.body
-  const uid = app.locals.folders.length + 1
-  console.log(uid)
-  app.locals.folders[uid] = { uid, title }
+  const id = app.locals.folders.length + 1
+  app.locals.folders.push({ id, title })
 
-  res.json({ uid, title })
+  res.json({ id, title })
 })
 
 app.get('/urls', (req, res) => {
