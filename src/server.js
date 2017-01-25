@@ -59,14 +59,22 @@ app.post('/folders/:name', (req, res) => {
   const date = Date.now()
   const count = 0
 
-  const shortURL = md5(url)
+  const urlKey = md5(url)
   const folder = app.locals.folders[name]
 
   checkIfExists(folder, url, res)
 
-  const newURL = app.locals.folders[name][shortURL] = [{ url, date, count }]
+  const shortURL = app.locals.folders[name][urlKey] = [{ url, date, count }]
 
-  res.json({ shortURL, newURL })
+  res.json({ urlKey, shortURL })
+})
+
+app.get('/folders/:name/:urlKey', (req, res) => {
+  const { name, urlKey } = req.params
+  const shortURL = app.locals.folders[name][urlKey]
+  const url = shortURL[0].url
+
+  res.json(url)
 })
 
 app.listen(app.get('port'), () => {

@@ -3,6 +3,7 @@ module.exports = checkIfExists = (folder, url, res) => {
     return folder[item].map((prop) => {
       if(prop.url === url) {
         res.sendStatus(404)
+        res.end()
       }
     })
   })
