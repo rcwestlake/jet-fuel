@@ -1,11 +1,13 @@
+/* eslint import/no-webpack-loader-syntax: 0 */
 import React, { PropTypes } from 'react';
 
-const URL = ({ url, index}) => {
+const URL = ({ url, index }) => {
   return (
     <li key={index}>
       <a
         href={`http://${url.url}`}
         target="_blank"
+        rel="noopener noreferrer"
       >
         {url.urlKey}
       </a>
@@ -15,7 +17,7 @@ const URL = ({ url, index}) => {
 
 URL.propTypes = {
   url: PropTypes.object,
-  index: PropTypes.number
+  index: PropTypes.number,
 }
 
 export default URL;
