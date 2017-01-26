@@ -94,9 +94,23 @@ class App extends Component {
     this.setState({ urls: updatedURLs })
   }
 
+  sortByPopularity() {
+    const urls = this.state.urls
+    urls.sort((a,b) => { return b.count - a.count })
+
+    this.setState({urls: urls})
+  }
+
+  sortByDate() {
+    const urls = this.state.urls
+    urls.sort((a,b) => { return b.date - a.date })
+
+    this.setState({urls: urls})
+  }
 
   render() {
     const { folders, urls, folderInput, urlInput, selectedFolder, filteredURLs } = this.state
+
     return (
       <div className="App">
         <h1 id="app-title">
@@ -137,6 +151,21 @@ class App extends Component {
           displayURLs={(e) => this.displayURLs(e)}
           updateURLState={(response) => this.updateURLState(response)}
         />
+
+        {!selectedFolder.length ?
+          <div>
+            <button
+              className='sort-button'
+              onClick={()=>this.sortByPopularity()}
+              > Sort by Popularity
+            </button> <br/>
+            <button
+              className='sort-button'
+              onClick={()=>this.sortByDate()}
+              > Sort by Date Added
+            </button>
+          </div>
+        : ''}
       </div>
     )
   }
