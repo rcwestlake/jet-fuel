@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import URL from './URL'
+import Folder from './Folder'
 
 class SideBar extends Component {
   constructor() {
@@ -19,24 +21,23 @@ class SideBar extends Component {
     const { folders, urls } = this.props
     const { filteredURLs } = this.state
 
-    const list = folders.map((folder) =>
-      <li
-        id={folder.id}
-        onClick={(location)=>this.displayURLs(location)}
-        key={folder.id}
-      >
-        {folder.title}
-      </li>
-    )
+    const list = folders.map((folder) => {
+      return <Folder
+              folder={folder}
+              displayURLs={(e) => this.displayURLs(e)}
+            />
+    })
 
     return(
       <aside>
         <ul>
           {list}
-          { filteredURLs ? filteredURLs.map((url, i) =>
-            <li key={i}> {url.urlKey} </li>
-          )
-          : ''}
+          {!!filteredURLs && filteredURLs.map((url, i) =>
+          <URL
+            index={i}
+            url={url}
+          />
+          )}
         </ul>
       </aside>
     )
