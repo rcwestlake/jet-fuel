@@ -13,7 +13,7 @@ class Container extends Component {
 
   displayURLs(location) {
     const id = location.target.id
-
+    this.props.updateFolderState(id)
     const urls = this.props.urls.filter(url => url.folder_id == id)
     this.setState({ filteredURLs: urls })
   }
@@ -50,6 +50,7 @@ class Container extends Component {
 Container.propTypes = {
   urls: PropTypes.array,
   folders: PropTypes.array,
+  updateFolderState: PropTypes.func,
 }
 
 export default Container;

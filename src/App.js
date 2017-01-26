@@ -12,6 +12,8 @@ class App extends Component {
       folders: [],
       urls: [],
       folderInput: '',
+      urlInput: '',
+      selectedFolder: null,
     }
   }
 
@@ -25,9 +27,18 @@ class App extends Component {
     .catch(error => console.error(error))
   }
 
-  handleChange(location) {
+  handleFolderChange(location) {
     const userInput = location.target.value;
     this.setState({ folderInput: userInput })
+  }
+
+  handleURLChange(location) {
+    const userInput = location.target.value;
+    this.setState({ urlInput: userInput })
+  }
+
+  updateSelectedFolder(folder_id) {
+    this.setState({ selectedFolder: folder_id })
   }
 
   addFolder() {
@@ -45,23 +56,44 @@ class App extends Component {
     this.setState({ folderInput: '' })
   }
 
+  addURLToFolder() {
+    const folder_id = this.state.selectedFolder
+    const url = this.state.urlInput
+    axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
+    .then((response) => {
+      this.state.urls.push(response.data)
+      this.setState({
+        urls: this.state.urls,
+      })
+    })
+    .catch(error => console.error(error))
+
+    this.setState({ urlInput: '' })
+  }
+
   render() {
-    const { folders, urls, folderInput } = this.state
+    const { folders, urls, folderInput, urlInput } = this.state
     return (
       <div className="App">
         <section>
           <Input
             folderInput={folderInput}
-            handleChange={event => this.handleChange(event)}
+            placeholder="Enter a folder"
+            buttonText="ADD FOLDER"
+            handleChange={e => this.handleFolderChange(e)}
+            addMethod={() => this.addFolder()}
           />
-          <button
-            onClick={() => this.addFolder()}
-          >
-            ADD FOLDER
-          </button>
+          <Input
+            folderInput={urlInput}
+            placeholder="Enter a URL"
+            buttonText="ADD URL"
+            handleChange={e => this.handleURLChange(e)}
+            addMethod={() => this.addURLToFolder()}
+          />
         </section>
         <Container
           folders={folders}
+          updateFolderState={folder_id => this.updateSelectedFolder(folder_id)}
           urls={urls}
         />
       </div>
