@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 
 app.set('port', process.env.PORT || 3001);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -64,8 +70,10 @@ app.get('/folders', (req, res) => {
 app.post('/folders', (req, res) => {
   const { title } = req.body
   const id = app.locals.folders.length + 1
-  app.locals.folders.push({ id, title })
 
+  checkIfExists(app.locals.folders, title, res) 
+
+  app.locals.folders.push({ id, title })
   res.json({ id, title })
 })
 
@@ -123,4 +131,4 @@ app.patch('/urls/:folder_id/:urlKey', (req, res) => {
 
 app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3001!');
-});
+})
