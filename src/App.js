@@ -1,7 +1,8 @@
 /* eslint import/no-webpack-loader-syntax: 0 */
 import React, { Component } from 'react';
 import axios from 'axios'
-import './App.css'
+import './styles/Reset.css'
+import './styles/App.css'
 import Input from './components/Input'
 import Container from './components/Container'
 
@@ -27,14 +28,10 @@ class App extends Component {
     .catch(error => console.error(error))
   }
 
-  handleFolderChange(location) {
+  handleChange(location, param) {
     const userInput = location.target.value;
-    this.setState({ folderInput: userInput })
-  }
-
-  handleURLChange(location) {
-    const userInput = location.target.value;
-    this.setState({ urlInput: userInput })
+    const key = param;
+    key === 'folderInput' ? this.setState({ folderInput: userInput }) : this.setState({ urlInput: userInput })
   }
 
   updateSelectedFolder(folder_id) {
@@ -67,31 +64,40 @@ class App extends Component {
         urls: this.state.urls,
       })
     })
-    .catch(error => console.error(error))
-
-    this.setState({ urlInput: '' })
   }
+
 
   render() {
     const { folders, urls, folderInput, urlInput } = this.state
     return (
       <div className="App">
+        <h1 id='app-title'>
+          WELCOME TO <span id='cursive'>IRWIN</span> :<br/> YOUR FAVORITE URL SHORTENER
+        </h1>
+
         <section>
           <Input
+            id="add-folder-input"
+            btnid="add-folder-button"
             folderInput={folderInput}
             placeholder="Enter a folder"
             buttonText="ADD FOLDER"
-            handleChange={e => this.handleFolderChange(e)}
+            handleChange={(e, param) => this.handleChange(e, param)}
             addMethod={() => this.addFolder()}
+            param="folderInput"
           />
           <Input
+            id="add-url-input"
+            btnid="add-url-button"
             folderInput={urlInput}
             placeholder="Enter a URL"
             buttonText="ADD URL"
-            handleChange={e => this.handleURLChange(e)}
+            handleChange={(e, param) => this.handleChange(e, param)}
             addMethod={() => this.addURLToFolder()}
+            param="urlInput"
           />
         </section>
+
         <Container
           folders={folders}
           updateFolderState={folder_id => this.updateSelectedFolder(folder_id)}

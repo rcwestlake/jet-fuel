@@ -3,15 +3,17 @@ import React, { Component, PropTypes } from 'react';
 
 class Input extends Component {
   render() {
-    const { folderInput, placeholder, buttonText, handleChange, addMethod } = this.props
+    const { id, btnid, folderInput, placeholder, buttonText, handleChange, addMethod, param } = this.props
     return (
       <div>
         <input
+          id={id}
           value={folderInput}
           placeholder={placeholder}
           onChange={handleChange}
         />
         <button
+          id={btnid}
           onClick={addMethod}
         >
           {buttonText}
