@@ -5,12 +5,12 @@ class Input extends Component {
   render() {
     const { id, btnid, folderInput, placeholder, buttonText, handleChange, addMethod, param } = this.props
     return (
-      <div>
+      <span>
         <input
           id={id}
           value={folderInput}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={e => handleChange(e, param)}
         />
         <button
           id={btnid}
@@ -18,17 +18,20 @@ class Input extends Component {
         >
           {buttonText}
         </button>
-      </div>
+      </span>
     )
   }
 }
 
 Input.propTypes = {
+  id: PropTypes.string,
+  btnid: PropTypes.string,
   folderInput: PropTypes.string,
   placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   handleChange: PropTypes.func,
   addMethod: PropTypes.func,
+  param: PropTypes.string,
 }
 
 export default Input;

@@ -90,7 +90,7 @@ class App extends Component {
             id="add-url-input"
             btnid="add-url-button"
             folderInput={urlInput}
-            placeholder="Enter a URL"
+            placeholder="www.yoururl.com"
             buttonText="ADD URL"
             handleChange={(e, param) => this.handleChange(e, param)}
             addMethod={() => this.addURLToFolder()}

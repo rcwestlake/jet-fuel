@@ -74,6 +74,12 @@ section {
   font-weight: 900;
   font-size: 20px;
 }
+
+#add-url-button {
+  position: relative;
+  bottom: 1px;
+}
+
 #add-folder-input, #add-url-input {
   padding: 15px;
   outline-color: #00B9A1;
