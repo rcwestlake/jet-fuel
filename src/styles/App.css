@@ -1,6 +1,7 @@
 body {
   /*font-family: 'Pacifico', cursive;
   font-family: 'Rubik', sans-serif;*/
+  background-color: #fafafa;
 }
 
 /* SIDEBAR STYLING */
@@ -16,6 +17,7 @@ aside {
   background: -webkit-linear-gradient(#162831, #114E50);
   background: -o-linear-gradient(#162831, #114E50);
   background: linear-gradient(#162831, #114E50);
+  border-right: 3px solid black;
 }
 
 #sidebar-title {
@@ -93,6 +95,9 @@ section {
   font-family: 'Pacifico', cursive;
   font-size: 40px;
   letter-spacing: 1em;
+}
+#cursive {
+  margin-left: 5px;
 }
 #urls-title {
   border-top: 5px solid black;
