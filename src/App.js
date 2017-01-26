@@ -15,6 +15,7 @@ class App extends Component {
       folderInput: '',
       urlInput: '',
       selectedFolder: [],
+      filteredURLs: [],
     }
   }
 
@@ -64,13 +65,27 @@ class App extends Component {
         urls: this.state.urls,
       })
     })
+    .then(() => {
+      const urls = this.state.urls.filter(item => item.folder_id == this.state.selectedFolder[0])
+      this.setState({ filteredURLs: urls })
+    })
 
     this.setState({ urlInput: '' })
   }
 
+  displayURLs(location) {
+    const id = location.target.id
+    const title = location.target.innerHTML
+
+    this.updateSelectedFolder(id, title)
+
+    const urls = this.state.urls.filter(item => item.folder_id == id)
+    this.setState({ filteredURLs: urls })
+  }
+
 
   render() {
-    const { folders, urls, folderInput, urlInput, selectedFolder } = this.state
+    const { folders, urls, folderInput, urlInput, selectedFolder, filteredURLs } = this.state
     return (
       <div className="App">
         <h1 id="app-title">
@@ -107,6 +122,8 @@ class App extends Component {
           updateFolderState={(folder_id, title) => this.updateSelectedFolder(folder_id, title)}
           urls={urls}
           selectedFolder={selectedFolder}
+          filteredURLs={filteredURLs}
+          displayURLs={(e) => this.displayURLs(e)}
         />
       </div>
     )
