@@ -4,6 +4,10 @@ import React, { Component, PropTypes } from 'react';
 class Input extends Component {
   render() {
     const { id, btnid, folderInput, placeholder, buttonText, handleChange, addMethod, param } = this.props
+
+    let selectedFolder;
+
+    param === 'folderInput' ? selectedFolder = true : selectedFolder = this.props.selectedFolder.length
     return (
       <span>
         <input
@@ -15,6 +19,7 @@ class Input extends Component {
         <button
           id={btnid}
           onClick={addMethod}
+          disabled={!selectedFolder}
         >
           {buttonText}
         </button>
@@ -32,6 +37,7 @@ Input.propTypes = {
   handleChange: PropTypes.func,
   addMethod: PropTypes.func,
   param: PropTypes.string,
+  selectedFolder: PropTypes.string,
 }
 
 export default Input;

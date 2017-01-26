@@ -13,13 +13,15 @@ class Container extends Component {
 
   displayURLs(location) {
     const id = location.target.id
-    this.props.updateFolderState(id)
+    const title = location.target.innerHTML
+
+    this.props.updateFolderState(id, title)
     const urls = this.props.urls.filter(url => url.folder_id == id)
     this.setState({ filteredURLs: urls })
   }
 
   render() {
-    const { folders } = this.props
+    const { folders, selectedFolder } = this.props
     const { filteredURLs } = this.state
 
     const list = folders.map((folder) => {
@@ -34,20 +36,20 @@ class Container extends Component {
     return (
       <div>
         <aside>
-          <h1 id='sidebar-title'>
+          <h1 id="sidebar-title">
             FOLDERS
             <i className="material-icons">keyboard_arrow_down</i>
           </h1>
-          <ul id='folders'>
+          <ul id="folders">
             {list}
           </ul>
         </aside>
 
-        <h1 id='urls-title'>
-          YOUR URLS
+        <h1 id="urls-title">
+          {selectedFolder[1] ? `${selectedFolder[1]} URLS` : 'YOUR URLS'}
           <i className="material-icons">keyboard_arrow_down</i>
         </h1>
-        <ul id='urls'>
+        <ul id="urls">
           {!!filteredURLs && filteredURLs.map((url, i) =>
             <URL
               index={i}
@@ -64,6 +66,7 @@ Container.propTypes = {
   urls: PropTypes.array,
   folders: PropTypes.array,
   updateFolderState: PropTypes.func,
+  selectedFolder: PropTypes.string,
 }
 
 export default Container;
