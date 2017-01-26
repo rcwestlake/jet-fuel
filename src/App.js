@@ -59,6 +59,13 @@ class App extends Component {
     const folder_id = this.state.selectedFolder[0]
     const url = this.state.urlInput
 
+    if (/^(?:(ftp|http|https):\/\/)?(?:[\w-]+\.)+[a-z]{3,6}$/.test(url)) {
+      console.log('passed')
+    } else {
+      alert('Enter a valid URL')
+      return
+    }
+
     axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
     .then((response) => {
       this.state.urls.push(response.data)
