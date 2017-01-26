@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Input from './components/Input'
-import SideBar from './components/SideBar'
+import Container from './components/Container'
 import axios from 'axios'
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
 
   handleChange(location) {
     let userInput = location.target.value;
-    this.setState({folderInput: userInput});
+    this.setState({ folderInput: userInput })
   }
 
   addFolder() {
@@ -41,12 +41,11 @@ class App extends Component {
     })
     .catch((error) => console.error(error))
 
-    this.setState({folderInput: ''})
+    this.setState({ folderInput: '' })
   }
 
   render() {
     const { folders, urls, folderInput } = this.state
-
     return (
       <div className="App">
         <section>
@@ -54,10 +53,13 @@ class App extends Component {
             folderInput={folderInput}
             handleChange={(event)=>this.handleChange(event)}
            />
-          <button onClick={()=>this.addFolder()}>ADD FOLDER</button>
+          <button
+            onClick={()=>this.addFolder()}
+          >
+            ADD FOLDER
+          </button>
         </section>
-
-        <SideBar
+        <Container
           folders={folders}
           urls={urls}
         />

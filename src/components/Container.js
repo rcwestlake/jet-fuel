@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import URL from './URL'
 import Folder from './Folder'
 
-class SideBar extends Component {
+class Container extends Component {
   constructor() {
     super()
     this.state = {
@@ -44,4 +44,4 @@ class SideBar extends Component {
   }
 };
 
-export default SideBar;
+export default Container;
