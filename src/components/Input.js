@@ -37,7 +37,7 @@ Input.propTypes = {
   handleChange: PropTypes.func,
   addMethod: PropTypes.func,
   param: PropTypes.string,
-  selectedFolder: PropTypes.string,
+  selectedFolder: PropTypes.array,
 }
 
 export default Input;

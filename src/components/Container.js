@@ -48,7 +48,7 @@ Container.propTypes = {
   urls: PropTypes.array,
   folders: PropTypes.array,
   updateFolderState: PropTypes.func,
-  selectedFolder: PropTypes.string,
+  selectedFolder: PropTypes.array,
   filteredURLs: PropTypes.array,
 }
 
