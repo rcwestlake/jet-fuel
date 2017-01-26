@@ -13,7 +13,9 @@ class App extends Component {
       folders: [],
       urls: [],
       folderInput: '',
-      urlInput: ''
+      urlInput: '',
+      selectedFolder: [],
+      filteredURLs: [],
     }
   }
 
@@ -30,7 +32,11 @@ class App extends Component {
   handleChange(location, param) {
     const userInput = location.target.value;
     const key = param;
-    key === 'folderInput' ? this.setState({ folderInput: userInput }) : this.setState({ urlInput: userInput})
+    key === 'folderInput' ? this.setState({ folderInput: userInput }) : this.setState({ urlInput: userInput })
+  }
+
+  updateSelectedFolder(folder_id, title) {
+    this.setState({ selectedFolder: [folder_id, title] })
   }
 
   addFolder() {
@@ -48,64 +54,79 @@ class App extends Component {
     this.setState({ folderInput: '' })
   }
 
-  addUrl() {
-    const urlInput = this.state.urlInput
+  addURLToFolder() {
+    const folder_id = this.state.selectedFolder[0]
+    const url = this.state.urlInput
 
-    //TODO: How to determine which folder to push new url into?
-
-    axios.post(('http://localhost:3001/urls/'), { url: urlInput })
+    axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
     .then((response) => {
-      console.log(response)
+      this.state.urls.push(response.data)
+      this.setState({
+        urls: this.state.urls,
+      })
     })
-    .catch(error => console.error(error))
+    .then(() => {
+      const urls = this.state.urls.filter(item => item.folder_id == this.state.selectedFolder[0])
+      this.setState({ filteredURLs: urls })
+    })
 
     this.setState({ urlInput: '' })
   }
 
+  displayURLs(location) {
+    const id = location.target.id
+    const title = location.target.innerHTML
+
+    this.updateSelectedFolder(id, title)
+
+    const urls = this.state.urls.filter(item => item.folder_id == id)
+    this.setState({ filteredURLs: urls })
+  }
+
 
   render() {
-    const { folders, urls, folderInput, urlInput } = this.state
+    const { folders, urls, folderInput, urlInput, selectedFolder, filteredURLs } = this.state
     return (
       <div className="App">
-        <h1 id='app-title'>
-          WELCOME TO <span id='cursive'>IRWIN</span> :<br/> YOUR FAVORITE URL SHORTENER
+        <h1 id="app-title">
+          WELCOME TO <span id="cursive">IRWIN</span> : <br/> YOUR FAVORITE URL SHORTENER
         </h1>
 
         <section>
           <Input
-            id='add-folder-input'
-            input={folderInput}
-            handleChange={(event, param) => this.handleChange(event, param)}
-            placeholder='Enter a folder'
-            param='folderInput'
+            id="add-folder-input"
+            btnid="add-folder-button"
+            folderInput={folderInput}
+            placeholder="Enter a folder"
+            buttonText="ADD FOLDER"
+            handleChange={(e, param) => this.handleChange(e, param)}
+            addMethod={() => this.addFolder()}
+            param="folderInput"
+            selectedFolder={selectedFolder}
           />
-          <button
-            id='add-folder-button'
-            onClick={() => this.addFolder()}
-          >
-            ADD <br/>FOLDER
-          </button>
           <Input
-            id='add-url-input'
-            input={urlInput}
-            handleChange={(event, param) => this.handleChange(event, param)}
-            placeholder='Enter a URL'
-            param='urlInput'
+            id="add-url-input"
+            btnid="add-url-button"
+            folderInput={urlInput}
+            placeholder="www.yoururl.com"
+            buttonText="ADD URL"
+            handleChange={(e, param) => this.handleChange(e, param)}
+            addMethod={() => this.addURLToFolder()}
+            param="urlInput"
+            selectedFolder={selectedFolder}
           />
-          <button
-            id='add-url-button'
-            onClick={()=>this.addUrl()}
-          >
-            ADD <br/>URL
-          </button>
         </section>
 
         <Container
           folders={folders}
+          updateFolderState={(folder_id, title) => this.updateSelectedFolder(folder_id, title)}
           urls={urls}
+          selectedFolder={selectedFolder}
+          filteredURLs={filteredURLs}
+          displayURLs={(e) => this.displayURLs(e)}
         />
       </div>
-    );
+    )
   }
 }
 
