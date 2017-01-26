@@ -51,11 +51,12 @@ class App extends Component {
       <div className="App">
         <section>
           <Input
-            folderInput={folderInput}  
+            folderInput={folderInput}
             handleChange={(event)=>this.handleChange(event)}
            />
           <button onClick={()=>this.addFolder()}>ADD FOLDER</button>
         </section>
+
         <SideBar
           folders={folders}
           urls={urls}
