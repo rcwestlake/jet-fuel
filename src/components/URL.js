@@ -3,7 +3,10 @@ import React, { PropTypes } from 'react';
 
 const URL = ({ url, index }) => {
   return (
-    <li key={index}>
+    <li
+      className='url'
+      key={index}
+      >
       <a
         href={`http://${url.url}`}
         target="_blank"

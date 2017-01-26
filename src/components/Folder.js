@@ -6,6 +6,7 @@ const Folder = ({ folder, displayURLs }) => {
     <li
       key={folder.id}
       id={folder.id}
+      className='folder'
       onClick={e => displayURLs(e)}
     >
       {folder.title}

@@ -1,7 +1,8 @@
 /* eslint import/no-webpack-loader-syntax: 0 */
 import React, { Component } from 'react';
 import axios from 'axios'
-import './App.css'
+import './styles/Reset.css'
+import './styles/App.css'
 import Input from './components/Input'
 import Container from './components/Container'
 
@@ -49,17 +50,23 @@ class App extends Component {
     const { folders, urls, folderInput } = this.state
     return (
       <div className="App">
+        <h1 id='app-title'>
+          WELCOME TO IRWIN: YOUR FAVORITE URL SHORTENER
+        </h1>
+        
         <section>
           <Input
             folderInput={folderInput}
             handleChange={event => this.handleChange(event)}
           />
           <button
+            id='add-folder-button'
             onClick={() => this.addFolder()}
           >
             ADD FOLDER
           </button>
         </section>
+
         <Container
           folders={folders}
           urls={urls}

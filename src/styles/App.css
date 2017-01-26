@@ -1,0 +1,67 @@
+body {
+  /*font-family: 'Pacifico', cursive;
+  font-family: 'Rubik', sans-serif;*/
+}
+/* SIDEBAR STYLING */
+aside {
+  font-family: 'Rubik', arial, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  position: fixed;
+  overflow: scroll;
+  width: 375px;
+  min-height: 100vh;
+  background: -webkit-linear-gradient(#162831, #114E50);
+  background: -o-linear-gradient(#162831, #114E50);
+  background: linear-gradient(#162831, #114E50);
+}
+
+#sidebar-title {
+  font-family: 'Pacifico', cursive;
+  letter-spacing: 1.5em;
+}
+
+#folders {
+
+}
+
+.folder {
+
+}
+
+/* MAIN SECTION STYLING */
+
+section, #app-title, #urls {
+  display: block;
+  position: absolute;
+  left: 375px;
+  height: 100px;
+  width: 100%;
+}
+section {
+  top: 100px;
+}
+#urls {
+  top: 200px;  
+}
+
+#add-folder-button {
+
+}
+
+#add-folder-input {
+
+}
+
+#urls {
+
+}
+
+.url {
+
+}
+
+#urls-title, #app-title {
+  font-family: 'Pacifico', cursive;
+}
