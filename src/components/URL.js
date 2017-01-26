@@ -23,7 +23,7 @@ class URL extends Component {
         key={index}
         onClick={() => this.patchRequest()}
       >
-        {url.urlKey}
+        {`irw.in/${url.urlKey}`}
       </li>
     );
   }
