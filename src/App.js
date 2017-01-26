@@ -59,6 +59,7 @@ class App extends Component {
   addURLToFolder() {
     const folder_id = this.state.selectedFolder
     const url = this.state.urlInput
+
     axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
     .then((response) => {
       this.state.urls.push(response.data)
@@ -97,7 +98,7 @@ class App extends Component {
           urls={urls}
         />
       </div>
-    );
+    )
   }
 }
 
