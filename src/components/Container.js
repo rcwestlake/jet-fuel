@@ -5,7 +5,7 @@ import Folder from './Folder'
 
 class Container extends Component {
   render() {
-    const { folders, selectedFolder, filteredURLs, displayURLs } = this.props
+    const { folders, selectedFolder, filteredURLs, displayURLs, updateURLState } = this.props
     const list = folders.map((folder) => {
       return (
         <Folder
@@ -36,6 +36,7 @@ class Container extends Component {
             <URL
               index={i}
               url={url}
+              updateURLState={updateURLState}
             />
           )}
         </ul>
@@ -50,6 +51,7 @@ Container.propTypes = {
   updateFolderState: PropTypes.func,
   selectedFolder: PropTypes.array,
   filteredURLs: PropTypes.array,
+  updateURLState: PropTypes.func,
 }
 
 export default Container;

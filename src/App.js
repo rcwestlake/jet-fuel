@@ -83,6 +83,17 @@ class App extends Component {
     this.setState({ filteredURLs: urls })
   }
 
+  updateURLState(response) {
+    const updatedURLs = this.state.urls.map((item) => {
+      if (item.urlKey == response.urlKey) {
+         item.count = response.count
+      }
+      return item
+    })
+
+    this.setState({ urls: updatedURLs })
+  }
+
 
   render() {
     const { folders, urls, folderInput, urlInput, selectedFolder, filteredURLs } = this.state
@@ -124,6 +135,7 @@ class App extends Component {
           selectedFolder={selectedFolder}
           filteredURLs={filteredURLs}
           displayURLs={(e) => this.displayURLs(e)}
+          updateURLState={(response) => this.updateURLState(response)}
         />
       </div>
     )
