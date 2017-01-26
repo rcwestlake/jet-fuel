@@ -1,31 +1,31 @@
-const checkIfExists = require('./helpers/server-helpers')
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
+const express = require('express')
+
+const app = express()
 const bodyParser = require('body-parser');
 const md5 = require('md5');
+const checkIfExists = require('./helpers/server-helpers')
 
 app.set('port', process.env.PORT || 3001);
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
 
 app.locals.folders = [
   {
     id: 1,
-    title: 'sports'
+    title: 'sports',
   },
   {
     id: 2,
-    title: 'news'
-  }
+    title: 'news',
+  },
 ]
 
 app.locals.urls = [
@@ -34,29 +34,29 @@ app.locals.urls = [
     url: 'www.espn.com',
     date: '21234333',
     count: 0,
-    folder_id: 1
+    folder_id: 1,
   },
   {
     urlKey: '900920sdhkf',
     url: 'www.football.com',
     date: '3903393',
     count: 0,
-    folder_id: 1
+    folder_id: 1,
   },
   {
     urlKey: '9938dfnkasla',
     url: 'www.fox.com',
     date: '4848444',
     count: 0,
-    folder_id: 2
+    folder_id: 2,
   },
   {
     urlKey: '7383jadfs',
     url: 'www.cnn.com',
     date: '13930303',
     count: 0,
-    folder_id: 2
-  }
+    folder_id: 2,
+  },
 ]
 
 app.get('/', (req, res) => {
@@ -71,7 +71,7 @@ app.post('/folders', (req, res) => {
   const { title } = req.body
   const id = app.locals.folders.length + 1
 
-  checkIfExists(app.locals.folders, title, res) 
+  checkIfExists(app.locals.folders, title, res)
 
   app.locals.folders.push({ id, title })
   res.json({ id, title })
@@ -79,15 +79,15 @@ app.post('/folders', (req, res) => {
 
 app.get('/folders/:id', (req, res) => {
   const { id } = req.params
-  const folder = app.locals.folders.filter((folder) => {
-     return folder.id == id
+  const folders = app.locals.folders.filter((folder) => {
+    return folder.id == id
   })
 
-  if(!folder.length) {
+  if (!folders.length) {
     res.sendStatus(404)
   }
 
-  res.json(folder)
+  res.json(folders)
 })
 
 app.get('/urls', (req, res) => {
@@ -96,11 +96,11 @@ app.get('/urls', (req, res) => {
 
 app.get('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
-  const urls = app.locals.urls.filter(url => {
+  const urls = app.locals.urls.filter((url) => {
     return url.folder_id == folder_id
   })
 
-  if(!urls.length) res.sendStatus(404)
+  if (!urls.length) res.sendStatus(404)
 
   res.json(urls)
 })
@@ -121,14 +121,13 @@ app.post('/urls/:folder_id', (req, res) => {
 })
 
 app.patch('/urls/:folder_id/:urlKey', (req, res) => {
-  const { folder_id, urlKey } = req.params
-  const selectedURL = app.locals.urls.find((item) => item.urlKey == urlKey)
-  const count = selectedURL.count++
-  const url = selectedURL.url
+  const { urlKey } = req.params
+  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
+  selectedURL.count += 1
 
   res.json(selectedURL)
 })
 
 app.listen(app.get('port'), () => {
-  console.log('Example app listening on port 3001!');
+  console.log('Jet-fuel app listening on port 3001!');
 })

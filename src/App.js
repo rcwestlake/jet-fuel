@@ -1,8 +1,9 @@
+/* eslint import/no-webpack-loader-syntax: 0 */
 import React, { Component } from 'react';
-import './App.css';
+import axios from 'axios'
+import './App.css'
 import Input from './components/Input'
 import Container from './components/Container'
-import axios from 'axios'
 
 class App extends Component {
   constructor() {
@@ -10,22 +11,22 @@ class App extends Component {
     this.state = {
       folders: [],
       urls: [],
-      folderInput: ''
+      folderInput: '',
     }
   }
 
   componentDidMount() {
     axios.get('http://localhost:3001/folders')
-    .then((response) => this.setState({ folders: response.data }))
-    .catch((error) => console.error(error))
+    .then(response => this.setState({ folders: response.data }))
+    .catch(error => console.error(error))
 
     axios.get('http://localhost:3001/urls')
-    .then((response) => this.setState({ urls: response.data }))
-    .catch((error) => console.error(error))
+    .then(response => this.setState({ urls: response.data }))
+    .catch(error => console.error(error))
   }
 
   handleChange(location) {
-    let userInput = location.target.value;
+    const userInput = location.target.value;
     this.setState({ folderInput: userInput })
   }
 
@@ -36,10 +37,10 @@ class App extends Component {
     .then((response) => {
       this.state.folders.push(response.data)
       this.setState({
-        folders: this.state.folders
+        folders: this.state.folders,
       })
     })
-    .catch((error) => console.error(error))
+    .catch(error => console.error(error))
 
     this.setState({ folderInput: '' })
   }
@@ -51,10 +52,10 @@ class App extends Component {
         <section>
           <Input
             folderInput={folderInput}
-            handleChange={(event)=>this.handleChange(event)}
-           />
+            handleChange={event => this.handleChange(event)}
+          />
           <button
-            onClick={()=>this.addFolder()}
+            onClick={() => this.addFolder()}
           >
             ADD FOLDER
           </button>

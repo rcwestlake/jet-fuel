@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: 0 */
 import React, { PropTypes } from 'react';
 
 const Folder = ({ folder, displayURLs }) => {
@@ -5,7 +6,7 @@ const Folder = ({ folder, displayURLs }) => {
     <li
       key={folder.id}
       id={folder.id}
-      onClick={(e) => displayURLs(e)}
+      onClick={e => displayURLs(e)}
     >
       {folder.title}
     </li>
@@ -13,8 +14,8 @@ const Folder = ({ folder, displayURLs }) => {
 }
 
 Folder.propTypes = {
-  url: PropTypes.object,
-  index: PropTypes.number
+  folder: PropTypes.object,
+  displayURLs: PropTypes.func,
 }
 
 export default Folder;

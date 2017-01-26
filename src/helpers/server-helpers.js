@@ -1,4 +1,4 @@
-module.exports = checkIfExists = (arr, param, res) => {
+const checkIfExists = (arr, param, res) => {
   arr.map((item) => {
     if (item.url == param || item.title == param) {
       console.log('it hit')
@@ -6,3 +6,5 @@ module.exports = checkIfExists = (arr, param, res) => {
     }
   })
 }
+
+module.exports = checkIfExists
