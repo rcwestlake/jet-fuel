@@ -24,6 +24,7 @@ aside {
   font-family: 'Pacifico', cursive;
   letter-spacing: 1.5em;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 #folders {
@@ -88,9 +89,8 @@ section {
   font-size: 20px;
 }
 
-#add-url-button {
-  position: relative;
-  bottom: 13px;
+#add-url-button:disabled {
+  cursor: not-allowed;
 }
 
 #add-folder-input, #add-url-input {

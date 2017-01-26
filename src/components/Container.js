@@ -19,7 +19,10 @@ class Container extends Component {
     return (
       <div>
         <aside>
-          <h1 id="sidebar-title">
+          <h1
+            id="sidebar-title"
+            onClick={()=> window.location.href = '/'}
+            >
             FOLDERS
             <i className="material-icons">keyboard_arrow_down</i>
           </h1>
