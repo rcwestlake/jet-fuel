@@ -9,6 +9,7 @@ app.set('port', process.env.PORT || 3001);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH')
   next();
 });
 
@@ -118,6 +119,14 @@ app.post('/urls/:folder_id', (req, res) => {
   app.locals.urls.push({ urlKey, url, date, count, folder_id })
 
   res.json({ urlKey, url, date, count, folder_id })
+})
+
+app.get('/urls/:folder_id/:urlKey', (req, res) => {
+  const { urlKey } = req.params
+  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
+
+  console.log('response');
+  res.redirect(`http://${selectedURL.url}`);
 })
 
 app.patch('/urls/:folder_id/:urlKey', (req, res) => {
