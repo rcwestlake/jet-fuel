@@ -16,6 +16,7 @@ class App extends Component {
       urlInput: '',
       selectedFolder: [],
       filteredURLs: [],
+      sortKey: ''
     }
   }
 
@@ -96,16 +97,24 @@ class App extends Component {
 
   sortByPopularity() {
     const urls = this.state.urls
-    urls.sort((a,b) => { return b.count - a.count })
-
-    this.setState({urls: urls})
+    if (this.state.sortKey !== 'popdesc') {
+      urls.sort((a,b) => { return b.count - a.count })
+      this.setState({urls: urls, sortKey: 'popdesc'})
+    } else {
+      urls.sort((a,b) => { return a.count - b.count })
+      this.setState({urls: urls, sortKey: 'popasc'})
+    }
   }
 
   sortByDate() {
     const urls = this.state.urls
-    urls.sort((a,b) => { return b.date - a.date })
-
-    this.setState({urls: urls})
+    if (this.state.sortKey !== 'datedesc') {
+      urls.sort((a,b) => { return b.date - a.date })
+      this.setState({urls: urls, sortKey: 'datedesc'})
+    } else {
+      urls.sort((a,b) => { return a.date - b.date })
+      this.setState({urls: urls, sortKey: 'dateasc'})
+    }
   }
 
   render() {
