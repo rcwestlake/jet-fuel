@@ -51,20 +51,27 @@ class App extends Component {
     return (
       <div className="App">
         <h1 id='app-title'>
-          WELCOME TO IRWIN: YOUR FAVORITE URL SHORTENER
+          WELCOME TO <span id='cursive'>IRWIN</span> :<br/> YOUR FAVORITE URL SHORTENER
         </h1>
-        
+
         <section>
           <Input
+            id='add-folder-input'
             folderInput={folderInput}
             handleChange={event => this.handleChange(event)}
+            placeholder='Enter a folder'
           />
           <button
             id='add-folder-button'
             onClick={() => this.addFolder()}
           >
-            ADD FOLDER
+            ADD <br/>FOLDER
           </button>
+          <Input
+            id='add-url-input'
+            placeholder='Enter a URL'
+          />
+          <button id='add-url-button'>ADD <br/>URL</button>
         </section>
 
         <Container

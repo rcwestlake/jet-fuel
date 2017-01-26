@@ -2,6 +2,7 @@ body {
   /*font-family: 'Pacifico', cursive;
   font-family: 'Rubik', sans-serif;*/
 }
+
 /* SIDEBAR STYLING */
 aside {
   font-family: 'Rubik', arial, sans-serif;
@@ -9,7 +10,7 @@ aside {
   font-weight: 500;
   color: white;
   position: fixed;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 375px;
   min-height: 100vh;
   background: -webkit-linear-gradient(#162831, #114E50);
@@ -20,48 +21,86 @@ aside {
 #sidebar-title {
   font-family: 'Pacifico', cursive;
   letter-spacing: 1.5em;
+  padding: 5px 10px;
 }
 
 #folders {
-
+  padding: 20px;
+  text-transform: uppercase;
 }
 
 .folder {
-
+  height: 35px;
+  border-bottom: 2px solid white;
+  padding-top: 5px;
+  cursor: pointer;
 }
 
+.folder:active, .active {
+  transition: .4s ease-in-out;
+  background-color: #F2F4F5;
+  color: #00B9A1
+}
 /* MAIN SECTION STYLING */
-
-section, #app-title, #urls {
+section, #app-title, #urls-title, #urls {
   display: block;
-  position: absolute;
+  position: fixed;
   left: 375px;
   height: 100px;
   width: 100%;
+  padding: 20px;
 }
 section {
-  top: 100px;
+  top: 150px;
+}
+#urls-title {
+  top: 250px;
 }
 #urls {
-  top: 200px;  
+  top: 330px;
+  height: auto;
+  border-top: 5px solid black;
 }
 
-#add-folder-button {
-
+#add-folder-button, #add-url-button {
+  cursor: pointer;
+  height: 58px;
+  width: 100px;
+  position: relative;
+  bottom: 13px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
 }
-
+#add-folder-input, #add-url-input {
+  padding: 15px;
+  outline-color: #00B9A1;
+  font-family: 'Rubik', sans-serif;
+  font-size: 20px;
+}
 #add-folder-input {
-
+  width: 150px;
 }
-
-#urls {
-
+#add-url-input {
+  margin-left: 20px;
 }
-
 .url {
-
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  font-size: 30px;
 }
-
-#urls-title, #app-title {
+#urls-title, #cursive {
   font-family: 'Pacifico', cursive;
+  font-size: 40px;
+  letter-spacing: 1em;
+}
+#urls-title {
+  border-top: 5px solid black;
+}
+#app-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
 }

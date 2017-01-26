@@ -43,11 +43,11 @@ class Container extends Component {
           </ul>
         </aside>
 
+        <h1 id='urls-title'>
+          YOUR URLS
+          <i className="material-icons">keyboard_arrow_down</i>
+        </h1>
         <ul id='urls'>
-          <h1 id='urls-title'>
-            YOUR URLS
-            <i className="material-icons">keyboard_arrow_down</i>
-          </h1>
           {!!filteredURLs && filteredURLs.map((url, i) =>
             <URL
               index={i}
