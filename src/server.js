@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('../knexfile')[environment];
+const database = require('knex')(configuration);
+
 app.locals.folders = [
   {
     id: 1,
@@ -65,76 +69,112 @@ app.get('/', (req, res) => {
 });
 
 app.get('/folders', (req, res) => {
-  res.json(app.locals.folders)
-});
+  database('folders').select()
+    .then((folders) => {
+      res.status(200).json(folders);
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
+})
 
 app.post('/folders', (req, res) => {
   const { title } = req.body
-  const id = app.locals.folders.length + 1
-
-  checkIfExists(app.locals.folders, title, res)
-
-  app.locals.folders.push({ id, title })
-  res.json({ id, title })
+  database('folders').insert({ title })
+  .then(() => {
+    database('folders').select()
+      .then((folders) => {
+        res.status(200).json(folders);
+      })
+      .catch((error) => {
+        console.error('error in post request', error)
+        res.sendStatus(404)
+      });
+  })
 })
 
 app.get('/folders/:id', (req, res) => {
   const { id } = req.params
-  const folders = app.locals.folders.filter((folder) => {
-    return folder.id == id
-  })
 
-  if (!folders.length) {
-    res.sendStatus(404)
-  }
-
-  res.json(folders)
+  database('folders').where('id', id).select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.get('/urls', (req, res) => {
-  res.json(app.locals.urls)
+  database('urls').select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.get('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
-  const urls = app.locals.urls.filter((url) => {
-    return url.folder_id == folder_id
-  })
-
-  if (!urls.length) res.sendStatus(404)
-
-  res.json(urls)
+  database('urls').where('folder_id', folder_id).select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.post('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
   const { url } = req.body
-
-  const urlKey = shortid.generate()
-  const date = Date.now()
   const count = 0
+  const urlKey = shortid.generate()
 
-  checkIfExists(app.locals.urls, url, res)
-
-  app.locals.urls.push({ urlKey, url, date, count, folder_id })
-
-  res.json({ urlKey, url, date, count, folder_id })
-})
-
-app.get('/urls/:folder_id/:urlKey', (req, res) => {
-  const { urlKey } = req.params
-  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
-
-  console.log('response');
-  res.redirect(`http://${selectedURL.url}`);
+  database('urls').insert({ urlKey, url, count, folder_id })
+    .then(() => {
+      database('urls').select()
+      .then((urls) => {
+        res.status(200).json(urls)
+      })
+      .catch((error) => {
+        console.error('error in post request', error)
+        res.sendStatus(404)
+      })
+    })
 })
 
 app.patch('/urls/:folder_id/:urlKey', (req, res) => {
   const { urlKey } = req.params
-  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
-  selectedURL.count += 1
+  database('urls').where('urlKey', urlKey)
+    .increment('count', 1)
+    .then((response) => {
+      console.log(response);
+      res.status(200).json({ response })
+    })
+    .catch((error) => {
+      console.error('error with patch request', error)
+    })
+})
 
-  res.json(selectedURL)
+app.get('/urls/:folder_id/:urlKey', (req, res) => {
+  const { urlKey } = req.params
+  database('urls').where('urlKey', urlKey).select()
+    .then((response) => {
+      res.redirect(`http://${response.url}`);
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.listen(app.get('port'), () => {

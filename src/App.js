@@ -45,9 +45,8 @@ class App extends Component {
 
     axios.post(('http://localhost:3001/folders'), { title: folder })
     .then((response) => {
-      this.state.folders.push(response.data)
       this.setState({
-        folders: this.state.folders,
+        folders: response.data,
       })
     })
     .catch(error => console.error(error))
@@ -106,10 +105,10 @@ class App extends Component {
     const urls = this.state.urls
     if (this.state.sortKey !== 'popdesc') {
       urls.sort((a,b) => { return b.count - a.count })
-      this.setState({urls: urls, sortKey: 'popdesc'})
+      this.setState({ urls: urls, sortKey: 'popdesc' })
     } else {
       urls.sort((a,b) => { return a.count - b.count })
-      this.setState({urls: urls, sortKey: 'popasc'})
+      this.setState({ urls: urls, sortKey: 'popasc' })
     }
   }
 
@@ -164,8 +163,8 @@ class App extends Component {
           urls={urls}
           selectedFolder={selectedFolder}
           filteredURLs={filteredURLs}
-          displayURLs={(e) => this.displayURLs(e)}
-          updateURLState={(response) => this.updateURLState(response)}
+          displayURLs={e => this.displayURLs(e)}
+          updateURLState={response => this.updateURLState(response)}
         />
 
         {!selectedFolder.length ?

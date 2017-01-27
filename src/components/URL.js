@@ -10,8 +10,8 @@ class URL extends Component {
       this.props.updateURLState(response.data)
       return response
     })
-    .then((response) => {
-      window.location.href = response.request.responseURL
+    .then(() => {
+      window.location.href = `http://${url.url}`
     })
   }
 
