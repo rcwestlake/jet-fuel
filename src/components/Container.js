@@ -5,8 +5,7 @@ import Folder from './Folder'
 
 class Container extends Component {
   render() {
-    const { folders, selectedFolder, filteredURLs, displayURLs, updateURLState, urls } = this.props
-
+    const { folders, selectedFolder, displayURLs, updateURLState, urls } = this.props
     const list = folders.map((folder) => {
       return (
         <Folder
@@ -16,14 +15,19 @@ class Container extends Component {
       )
     })
 
+    const filteredURLs = urls.filter((url) => {
+      return url.folder_id == selectedFolder[0]
+    })
+
     return (
       <div>
         <aside>
           <h1
             id="sidebar-title"
-            onClick={()=> window.location.href = '/'}
-            >
-            FOLDERS
+          >
+            <a href="/">
+              FOLDERS
+            </a>
             <i className="material-icons">keyboard_arrow_down</i>
           </h1>
           <ul id="folders">
@@ -36,19 +40,25 @@ class Container extends Component {
           <i className="material-icons">keyboard_arrow_down</i>
         </h1>
         <ul id="urls">
-          {filteredURLs.length ? filteredURLs.map((url, i) =>
+          {filteredURLs.length ? filteredURLs.map((url, i) => {
+            return (
+              <URL
+                index={i}
+                url={url}
+                updateURLState={updateURLState}
+              />
+            )
+          }) : ''}
+          {selectedFolder.length && !filteredURLs.length ?
+            <h4>No URLs in this folder. Enter one above in the URL field.</h4>
+            : '' }
+          {!selectedFolder.length && !filteredURLs.length ? urls.map((url, i) =>
             <URL
               index={i}
               url={url}
               updateURLState={updateURLState}
             />)
-          : urls.map((url, i) =>
-            <URL
-              index={i}
-              url={url}
-              updateURLState={updateURLState}
-            />)
-          }
+          : ''}
         </ul>
       </div>
     )
@@ -58,9 +68,8 @@ class Container extends Component {
 Container.propTypes = {
   urls: PropTypes.array,
   folders: PropTypes.array,
-  updateFolderState: PropTypes.func,
+  displayURLs: PropTypes.func,
   selectedFolder: PropTypes.array,
-  filteredURLs: PropTypes.array,
   updateURLState: PropTypes.func,
 }
 
