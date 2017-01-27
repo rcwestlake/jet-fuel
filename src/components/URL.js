@@ -9,10 +9,6 @@ class URL extends Component {
     axios.patch(`http://localhost:3001/urls/${url.folder_id}/${url.urlKey}`)
     .then((response) => {
       this.props.updateURLState(response.data)
-      return response
-    })
-    .then(() => {
-      window.location.href = `http://${url.url}`
     })
   }
 
@@ -20,11 +16,18 @@ class URL extends Component {
     const { url, index } = this.props
     return (
       <li
-        className="url"
         key={index}
-        onClick={() => this.patchRequest()}
       >
-        <p>{url.urlKey}</p>
+        <p className="url">
+          <a
+            href={`https://${url.url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => this.patchRequest()}
+          >
+            {url.urlKey}
+          </a>
+        </p>
         <p>Date Added: {moment(url.created_at).format('MMM DD YYYY')}</p>
         <p>Popularity: {url.count}</p>
       </li>

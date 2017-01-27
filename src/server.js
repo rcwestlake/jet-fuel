@@ -137,7 +137,7 @@ app.post('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
   const { url } = req.body
   const count = 0
-  const urlKey = `irw.in/${shortid.generate()}`
+  const urlKey = `irw.in-${shortid.generate()}`
 
   database('urls').insert({ urlKey, url, count, folder_id })
     .then(() => {

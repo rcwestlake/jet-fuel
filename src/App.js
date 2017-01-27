@@ -16,7 +16,7 @@ class App extends Component {
       urlInput: '',
       selectedFolder: [],
       filteredURLs: [],
-      sortKey: ''
+      sortKey: '',
     }
   }
 
@@ -112,11 +112,11 @@ class App extends Component {
   sortByDate() {
     const urls = this.state.urls
     if (this.state.sortKey !== 'datedesc') {
-      urls.sort((a,b) => { return b.date - a.date })
-      this.setState({ urls, sortKey: 'datedesc'})
+      urls.sort((a, b) => { return b.date - a.date })
+      this.setState({ urls, sortKey: 'datedesc' })
     } else {
-      urls.sort((a,b) => { return a.date - b.date })
-      this.setState({ urls, sortKey: 'dateasc'})
+      urls.sort((a, b) => { return a.date - b.date })
+      this.setState({ urls, sortKey: 'dateasc' })
     }
   }
 
@@ -126,7 +126,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1 id="app-title">
-          WELCOME TO <span id="cursive">IRWIN</span> : <br/> YOUR FAVORITE URL SHORTENER
+          WELCOME TO <span id="cursive">IRWIN</span> : <br /> YOUR FAVORITE URL SHORTENER
         </h1>
 
         <section>
@@ -167,14 +167,16 @@ class App extends Component {
         {!selectedFolder.length ?
           <div>
             <button
-              className='sort-button'
-              onClick={()=>this.sortByPopularity()}
-              > Sort by Popularity
-            </button> <br/>
+              className="sort-button"
+              onClick={() => this.sortByPopularity()}
+            >
+              Sort by Popularity
+            </button> <br />
             <button
-              className='sort-button'
-              onClick={()=>this.sortByDate()}
-              > Sort by Date Added
+              className="sort-button"
+              onClick={() => this.sortByDate()}
+            >
+              Sort by Date Added
             </button>
           </div>
         : ''}
