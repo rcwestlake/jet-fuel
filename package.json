@@ -30,6 +30,5 @@
     "test": "react-scripts test --env=jsdom",
     "server-test": "mocha",
     "eject": "react-scripts eject"
-  },
-  "proxy": "http://localhost:3001/"
+  }
 }
