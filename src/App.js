@@ -15,17 +15,16 @@ class App extends Component {
       folderInput: '',
       urlInput: '',
       selectedFolder: [],
-      filteredURLs: [],
-      sortKey: ''
+      sortKey: '',
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/folders')
+    axios.get('/folders')
     .then(response => this.setState({ folders: response.data }))
     .catch(error => console.error(error))
 
-    axios.get('http://localhost:3001/urls')
+    axios.get('/urls')
     .then(response => this.setState({ urls: response.data }))
     .catch(error => console.error(error))
   }
@@ -43,7 +42,7 @@ class App extends Component {
   addFolder() {
     const folder = this.state.folderInput
 
-    axios.post(('http://localhost:3001/folders'), { title: folder })
+    axios.post(('/folders'), { title: folder })
     .then((response) => {
       this.setState({
         folders: response.data,
@@ -58,23 +57,16 @@ class App extends Component {
     const folder_id = this.state.selectedFolder[0]
     const url = this.state.urlInput
 
-    if (/^(?:(ftp|http|https):\/\/)?(?:[\w-]+\.)+[a-z]{3,6}$/.test(url)) {
-      console.log('passed')
-    } else {
+    if (!/^(?:(ftp|http|https):\/\/)?(?:[\w-]+\.)+[a-z]{3,6}$/.test(url)) {
       alert('Enter a valid URL')
       return
     }
 
-    axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
+    axios.post((`/urls/${folder_id}`), { url })
     .then((response) => {
-      this.state.urls.push(response.data)
       this.setState({
-        urls: this.state.urls,
+        urls: response.data,
       })
-    })
-    .then(() => {
-      const urls = this.state.urls.filter(item => item.folder_id == this.state.selectedFolder[0])
-      this.setState({ filteredURLs: urls })
     })
 
     this.setState({ urlInput: '' })
@@ -83,56 +75,48 @@ class App extends Component {
   displayURLs(location) {
     const id = location.target.id
     const title = location.target.innerHTML
-
     this.updateSelectedFolder(id, title)
-
-    const urls = this.state.urls.filter(item => item.folder_id == id)
-    this.setState({ filteredURLs: urls })
   }
 
   updateURLState(response) {
-    const updatedURLs = this.state.urls.map((item) => {
-      if (item.urlKey == response.urlKey) {
-         item.count = response.count
-      }
-      return item
-    })
-
-    this.setState({ urls: updatedURLs })
+    this.setState({ urls: response })
   }
 
   sortByPopularity() {
     const urls = this.state.urls
     if (this.state.sortKey !== 'popdesc') {
-      urls.sort((a,b) => { return b.count - a.count })
-      this.setState({ urls: urls, sortKey: 'popdesc' })
+      urls.sort((a, b) => { return b.count - a.count })
+      this.setState({ urls, sortKey: 'popdesc' })
     } else {
-      urls.sort((a,b) => { return a.count - b.count })
-      this.setState({ urls: urls, sortKey: 'popasc' })
+      urls.sort((a, b) => { return a.count - b.count })
+      this.setState({ urls, sortKey: 'popasc' })
     }
   }
 
   sortByDate() {
     const urls = this.state.urls
     if (this.state.sortKey !== 'datedesc') {
-      urls.sort((a,b) => { return b.date - a.date })
-      this.setState({urls: urls, sortKey: 'datedesc'})
+      urls.sort((a, b) => { return b.date - a.date })
+      this.setState({ urls, sortKey: 'datedesc' })
     } else {
-      urls.sort((a,b) => { return a.date - b.date })
-      this.setState({urls: urls, sortKey: 'dateasc'})
+      urls.sort((a, b) => { return a.date - b.date })
+      this.setState({ urls, sortKey: 'dateasc' })
     }
   }
 
   render() {
-    const { folders, urls, folderInput, urlInput, selectedFolder, filteredURLs } = this.state
+    const { folders, urls, folderInput, urlInput, selectedFolder } = this.state
 
     return (
       <div className="App">
-        <h1 id="app-title">
-          WELCOME TO <span id="cursive">IRWIN</span> : <br/> YOUR FAVORITE URL SHORTENER
-        </h1>
+        <header>
+          <h1 id="app-title">
+            Welcome To <span>Irw.in:</span>
+          </h1>
+          <p id="tagline">Your favorite URL shortener</p>
+        </header>
 
-        <section>
+        <section className="input-container">
           <Input
             id="add-folder-input"
             btnid="add-folder-button"
@@ -162,22 +146,23 @@ class App extends Component {
           updateFolderState={(folder_id, title) => this.updateSelectedFolder(folder_id, title)}
           urls={urls}
           selectedFolder={selectedFolder}
-          filteredURLs={filteredURLs}
           displayURLs={e => this.displayURLs(e)}
           updateURLState={response => this.updateURLState(response)}
         />
 
         {!selectedFolder.length ?
-          <div>
+          <div className="sort-container">
             <button
-              className='sort-button'
-              onClick={()=>this.sortByPopularity()}
-              > Sort by Popularity
-            </button> <br/>
+              className="sort-button"
+              onClick={() => this.sortByPopularity()}
+            >
+              Sort by Popularity
+            </button> <br />
             <button
-              className='sort-button'
-              onClick={()=>this.sortByDate()}
-              > Sort by Date Added
+              className="sort-button"
+              onClick={() => this.sortByDate()}
+            >
+              Sort by Date Added
             </button>
           </div>
         : ''}

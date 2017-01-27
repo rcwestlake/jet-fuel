@@ -3,7 +3,8 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
-const checkIfExists = require('./helpers/server-helpers')
+const checkIfExists = require('./helpers/server-helpers');
+const path = require('path')
 
 app.set('port', process.env.PORT || 3001);
 app.use((req, res, next) => {
@@ -18,51 +19,15 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
+
+
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
-
-app.locals.folders = [
-  {
-    id: 1,
-    title: 'sports',
-  },
-  {
-    id: 2,
-    title: 'news',
-  },
-]
-
-app.locals.urls = [
-  {
-    urlKey: 'QwewTIlzP',
-    url: 'www.espn.com',
-    date: '21234333',
-    count: 0,
-    folder_id: 1,
-  },
-  {
-    urlKey: 'PlORxuDZj',
-    url: 'www.football.com',
-    date: '3903393',
-    count: 0,
-    folder_id: 1,
-  },
-  {
-    urlKey: 'rJCRTltyz',
-    url: 'www.fox.com',
-    date: '4848444',
-    count: 0,
-    folder_id: 2,
-  },
-  {
-    urlKey: 'ANcUwLpiU',
-    url: 'www.cnn.com',
-    date: '13930303',
-    count: 0,
-    folder_id: 2,
-  },
-]
 
 app.get('/', (req, res) => {
   res.send('Welcome to Irwin');
@@ -137,7 +102,7 @@ app.post('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
   const { url } = req.body
   const count = 0
-  const urlKey = shortid.generate()
+  const urlKey = `irw.in-${shortid.generate()}`
 
   database('urls').insert({ urlKey, url, count, folder_id })
     .then(() => {
@@ -156,9 +121,11 @@ app.patch('/urls/:folder_id/:urlKey', (req, res) => {
   const { urlKey } = req.params
   database('urls').where('urlKey', urlKey)
     .increment('count', 1)
-    .then((response) => {
-      console.log(response);
-      res.status(200).json({ response })
+    .then(() => {
+      database('urls').select()
+      .then((urls) => {
+        res.status(200).json({ urls })
+      })
     })
     .catch((error) => {
       console.error('error with patch request', error)
@@ -180,3 +147,5 @@ app.get('/urls/:folder_id/:urlKey', (req, res) => {
 app.listen(app.get('port'), () => {
   console.log('Jet-fuel app listening on port 3001!');
 })
+
+module.exports = app
