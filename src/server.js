@@ -29,48 +29,6 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 
-app.locals.folders = [
-  {
-    id: 1,
-    title: 'sports',
-  },
-  {
-    id: 2,
-    title: 'news',
-  },
-]
-
-app.locals.urls = [
-  {
-    urlKey: 'QwewTIlzP',
-    url: 'www.espn.com',
-    date: '21234333',
-    count: 0,
-    folder_id: 1,
-  },
-  {
-    urlKey: 'PlORxuDZj',
-    url: 'www.football.com',
-    date: '3903393',
-    count: 0,
-    folder_id: 1,
-  },
-  {
-    urlKey: 'rJCRTltyz',
-    url: 'www.fox.com',
-    date: '4848444',
-    count: 0,
-    folder_id: 2,
-  },
-  {
-    urlKey: 'ANcUwLpiU',
-    url: 'www.cnn.com',
-    date: '13930303',
-    count: 0,
-    folder_id: 2,
-  },
-]
-
 app.get('/', (req, res) => {
   res.send('Welcome to Irwin');
 });

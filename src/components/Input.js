@@ -6,7 +6,9 @@ class Input extends Component {
     const { id, btnid, folderInput, placeholder, buttonText, handleChange, addMethod, param } = this.props
 
     let selectedFolder;
-    param === 'folderInput' ? selectedFolder = true : selectedFolder = this.props.selectedFolder.length
+    param === 'folderInput' ?
+      selectedFolder = true :
+      selectedFolder = this.props.selectedFolder.length
 
     return (
       <div className="input-and-btn">
