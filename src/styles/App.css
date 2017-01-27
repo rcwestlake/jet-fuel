@@ -24,6 +24,7 @@ aside {
   font-family: 'Pacifico', cursive;
   letter-spacing: 1.5em;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 #folders {
@@ -52,6 +53,19 @@ section, #app-title, #urls-title, #urls {
   width: 100%;
   padding: 20px;
 }
+.sort-button {
+  display: inline-block;
+  position: fixed;
+  left: 1000px;
+  top: 340px;
+  cursor: pointer;
+  height: 50px;
+  width: 100px;
+  position: relative;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+}
 section {
   top: 150px;
 }
@@ -75,9 +89,8 @@ section {
   font-size: 20px;
 }
 
-#add-url-button {
-  position: relative;
-  bottom: 1px;
+#add-url-button:disabled {
+  cursor: not-allowed;
 }
 
 #add-folder-input, #add-url-input {
