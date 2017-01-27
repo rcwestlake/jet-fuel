@@ -3,9 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
-
-
-
 body {
   background-color: #fafafa;
   box-sizing: border-box;
@@ -62,7 +59,6 @@ p {
 }
 
 /* MAIN SECTION STYLING */
-
 header {
   background-color: #15A4FA;
   position: fixed;
@@ -111,12 +107,11 @@ header {
   color: #fff;
   cursor: pointer;
   height: 58px;
-  width: 220px;
+  width: 150px;
   font-weight: bold;
   font-size: 20px;
   margin-left: 10px;
 }
-
 
 #add-url-button:disabled {
   cursor: not-allowed;
@@ -126,11 +121,12 @@ header {
   padding: 15px 0px;
   outline-color: #00B9A1;
   font-size: 20px;
-  width: 350px;
+  width: 180px;
 }
 
 #add-url-input {
   margin-left: 20px;
+  width: 260px;
 }
 
 .sort-container {
