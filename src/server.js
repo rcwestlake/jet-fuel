@@ -2,7 +2,7 @@ const express = require('express')
 
 const app = express()
 const bodyParser = require('body-parser');
-const md5 = require('md5');
+const shortid = require('shortid');
 const checkIfExists = require('./helpers/server-helpers')
 
 app.set('port', process.env.PORT || 3001);
@@ -31,28 +31,28 @@ app.locals.folders = [
 
 app.locals.urls = [
   {
-    urlKey: '1235jdflkas',
+    urlKey: 'QwewTIlzP',
     url: 'www.espn.com',
     date: '21234333',
     count: 0,
     folder_id: 1,
   },
   {
-    urlKey: '900920sdhkf',
+    urlKey: 'PlORxuDZj',
     url: 'www.football.com',
     date: '3903393',
     count: 0,
     folder_id: 1,
   },
   {
-    urlKey: '9938dfnkasla',
+    urlKey: 'rJCRTltyz',
     url: 'www.fox.com',
     date: '4848444',
     count: 0,
     folder_id: 2,
   },
   {
-    urlKey: '7383jadfs',
+    urlKey: 'ANcUwLpiU',
     url: 'www.cnn.com',
     date: '13930303',
     count: 0,
@@ -61,7 +61,7 @@ app.locals.urls = [
 ]
 
 app.get('/', (req, res) => {
-  res.send('Welcome to Irwyn');
+  res.send('Welcome to Irwin');
 });
 
 app.get('/folders', (req, res) => {
@@ -110,7 +110,7 @@ app.post('/urls/:folder_id', (req, res) => {
   const { folder_id } = req.params
   const { url } = req.body
 
-  const urlKey = md5(url)
+  const urlKey = shortid.generate()
   const date = Date.now()
   const count = 0
 
