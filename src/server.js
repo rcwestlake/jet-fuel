@@ -152,20 +152,29 @@ app.post('/urls/:folder_id', (req, res) => {
     })
 })
 
-app.get('/urls/:folder_id/:urlKey', (req, res) => {
-  const { urlKey } = req.params
-  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
-
-  console.log('response');
-  res.redirect(`http://${selectedURL.url}`);
-})
-
 app.patch('/urls/:folder_id/:urlKey', (req, res) => {
   const { urlKey } = req.params
-  const selectedURL = app.locals.urls.find(item => item.urlKey == urlKey)
-  selectedURL.count += 1
+  database('urls').where('urlKey', urlKey)
+    .increment('count', 1)
+    .then((response) => {
+      console.log(response);
+      res.status(200).json({ response })
+    })
+    .catch((error) => {
+      console.error('error with patch request', error)
+    })
+})
 
-  res.json(selectedURL)
+app.get('/urls/:folder_id/:urlKey', (req, res) => {
+  const { urlKey } = req.params
+  database('urls').where('urlKey', urlKey).select()
+    .then((response) => {
+      res.redirect(`http://${response.url}`);
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.listen(app.get('port'), () => {
