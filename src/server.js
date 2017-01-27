@@ -4,6 +4,7 @@ const app = express()
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
 const checkIfExists = require('./helpers/server-helpers');
+const path = require('path')
 
 app.set('port', process.env.PORT || 3001);
 app.use((req, res, next) => {
@@ -17,6 +18,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
+
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
+
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
