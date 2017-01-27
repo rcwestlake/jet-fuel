@@ -20,31 +20,30 @@ describe('GET /folders', function() {
   });
 });
 
-describe('POST /api/folders', function() {
-  it('should create a new folder', function(done) {
-    let folder = {0:'Fun Times'}
+describe('POST /folders', function() {
+  it('should post a new folder to the database', function(done) {
+    const title = {'Food'}
     chai.request(server)
-    .post('/api/folders')
-    .send(folder)
+    .post('/folders')
+    .send(title)
     .end(function(err, res) {
     res.should.have.status(200);
-    res.should.be.json; // jshint ignore:line
     res.body.should.be.a('object');
     done();
     });
   });
 });
 
-describe('GET /api/folders/:id', function() {
-it('should return a single folder', function(done) {
+describe('GET /folders/:id', function() {
+it('should return a folder', function(done) {
   chai.request(server)
-  .get('/api/folders/0')
+  .get('/folders/1')
   .end(function(err, res) {
     res.should.have.status(200);
     res.should.be.json;
     res.body.should.be.a('object');
     res.body.should.have.property('id');
-    res.body.should.have.property('folder');
+    res.body.should.have.property('title');
     done();
   });
 });
