@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
-const checkIfExists = require('./helpers/server-helpers')
+const checkIfExists = require('./helpers/server-helpers');
 
 app.set('port', process.env.PORT || 3001);
 app.use((req, res, next) => {
