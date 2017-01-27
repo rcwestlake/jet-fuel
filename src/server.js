@@ -180,3 +180,5 @@ app.get('/urls/:folder_id/:urlKey', (req, res) => {
 app.listen(app.get('port'), () => {
   console.log('Jet-fuel app listening on port 3001!');
 })
+
+module.exports = app
