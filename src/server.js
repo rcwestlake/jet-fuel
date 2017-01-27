@@ -156,8 +156,11 @@ app.patch('/urls/:folder_id/:urlKey', (req, res) => {
   const { urlKey } = req.params
   database('urls').where('urlKey', urlKey)
     .increment('count', 1)
-    .then((response) => {
-      res.status(200).json({ response })
+    .then(() => {
+      database('urls').select()
+      .then((urls) => {
+        res.status(200).json({ urls })
+      })
     })
     .catch((error) => {
       console.error('error with patch request', error)

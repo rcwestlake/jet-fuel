@@ -5,7 +5,7 @@ import Folder from './Folder'
 
 class Container extends Component {
   render() {
-    const { folders, selectedFolder, filteredURLs, displayURLs, updateURLState, urls } = this.props
+    const { folders, selectedFolder, displayURLs, updateURLState, urls } = this.props
     const list = folders.map((folder) => {
       return (
         <Folder
@@ -13,6 +13,10 @@ class Container extends Component {
           displayURLs={e => displayURLs(e)}
         />
       )
+    })
+
+    const filteredURLs = urls.filter((url) => {
+      return url.folder_id == selectedFolder[0]
     })
 
     return (
@@ -36,13 +40,15 @@ class Container extends Component {
           <i className="material-icons">keyboard_arrow_down</i>
         </h1>
         <ul id="urls">
-          {filteredURLs.length ? filteredURLs.map((url, i) =>
-            <URL
-              index={i}
-              url={url}
-              updateURLState={updateURLState}
-            />)
-          : ''}
+          {filteredURLs.length ? filteredURLs.map((url, i) => {
+            return (
+              <URL
+                index={i}
+                url={url}
+                updateURLState={updateURLState}
+              />
+            )
+          }) : ''}
           {selectedFolder.length && !filteredURLs.length ?
             <h4>No URLs in this folder. Enter one above in the URL field.</h4>
             : '' }
@@ -64,7 +70,6 @@ Container.propTypes = {
   folders: PropTypes.array,
   displayURLs: PropTypes.func,
   selectedFolder: PropTypes.array,
-  filteredURLs: PropTypes.array,
   updateURLState: PropTypes.func,
 }
 
