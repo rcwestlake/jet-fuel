@@ -6,7 +6,7 @@ import moment from 'moment'
 class URL extends Component {
   patchRequest() {
     const { url } = this.props
-    axios.patch(`http://localhost:3001/urls/${url.folder_id}/${url.urlKey}`)
+    axios.patch(`/urls/${url.folder_id}/${url.urlKey}`)
     .then((response) => {
       this.props.updateURLState(response.data.urls)
     })

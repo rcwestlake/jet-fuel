@@ -20,11 +20,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/folders')
+    axios.get('/folders')
     .then(response => this.setState({ folders: response.data }))
     .catch(error => console.error(error))
 
-    axios.get('http://localhost:3001/urls')
+    axios.get('/urls')
     .then(response => this.setState({ urls: response.data }))
     .catch(error => console.error(error))
   }
@@ -42,7 +42,7 @@ class App extends Component {
   addFolder() {
     const folder = this.state.folderInput
 
-    axios.post(('http://localhost:3001/folders'), { title: folder })
+    axios.post(('/folders'), { title: folder })
     .then((response) => {
       this.setState({
         folders: response.data,
@@ -62,7 +62,7 @@ class App extends Component {
       return
     }
 
-    axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
+    axios.post((`/urls/${folder_id}`), { url })
     .then((response) => {
       this.setState({
         urls: response.data,
