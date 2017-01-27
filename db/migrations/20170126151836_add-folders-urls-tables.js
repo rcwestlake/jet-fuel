@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('urls', function(table){
       table.string('urlKey').primary().unique();
       table.string('url');
-      table.timestamps();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
       table.integer('count');
       table.integer('folder_id')
            .references('id')
