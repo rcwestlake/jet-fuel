@@ -113,10 +113,10 @@ class App extends Component {
     const urls = this.state.urls
     if (this.state.sortKey !== 'datedesc') {
       urls.sort((a,b) => { return b.date - a.date })
-      this.setState({urls: urls, sortKey: 'datedesc'})
+      this.setState({ urls, sortKey: 'datedesc'})
     } else {
       urls.sort((a,b) => { return a.date - b.date })
-      this.setState({urls: urls, sortKey: 'dateasc'})
+      this.setState({ urls, sortKey: 'dateasc'})
     }
   }
 

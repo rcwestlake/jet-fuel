@@ -1,6 +1,7 @@
 /* eslint import/no-webpack-loader-syntax: 0 */
 import React, { Component, PropTypes } from 'react';
 import axios from 'axios'
+import moment from 'moment'
 
 class URL extends Component {
   patchRequest() {
@@ -23,7 +24,9 @@ class URL extends Component {
         key={index}
         onClick={() => this.patchRequest()}
       >
-        {`irw.in/${url.urlKey}`}
+        <p>{url.urlKey}</p>
+        <p>Date Added: {moment(url.created_at).format('MMM DD YYYY')}</p>
+        <p>Popularity: {url.count}</p>
       </li>
     );
   }
