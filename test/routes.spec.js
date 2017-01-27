@@ -49,44 +49,45 @@ it('should return a folder', function(done) {
 });
 });
 
-describe('GET /api/folders/:folderid/:shorturl', function() {
-it('should return a single url', function(done) {
+describe('GET /urls', function() {
+it('should return all of the urls', function(done) {
   chai.request(server)
-  .get('/api/folders/0/2')
+  .get('/urls')
   .end(function(err, res) {
     res.should.have.status(200);
     res.should.be.json;
     res.body.should.be.a('object');
-    res.body.should.have.property('folderid');
-    res.body.should.have.property('shorturl');
-    res.body.should.have.property('actualurl');
+    done();
+  });
+});
+});
+
+describe('GET /urls:folder_id', function() {
+it('should return the urls for a given folder', function(done) {
+  chai.request(server)
+  .get('/urls:folder_id')
+  .end(function(err, res) {
+    res.should.have.status(200);
+    res.should.be.json;
+    res.body.should.be.a('object');
+    done();
+  });
+});
+});
+
+describe('POST /urls/:folder_id', function() {
+it('should post a new url to a folder', function(done) {
+  chai.request(server)
+  .get('/urls/1')
+  .end(function(err, res) {
+    res.should.have.status(200);
+    res.should.be.json;
+    res.body.should.be.a('object');
+    res.body.should.have.property('urlKey');
+    res.body.should.have.property('url');
     res.body.should.have.property('date');
-    res.body.should.have.property('clickCount');
-    done();
-  });
-});
-});
-
-describe('GET /api/urls', function() {
-it('should return the urls', function(done) {
-  chai.request(server)
-  .get('/api/urls')
-  .end(function(err, res) {
-    res.should.have.status(200);
-    res.should.be.json;
-    res.body.should.be.a('object');
-    done();
-  });
-});
-});
-
-describe('GET /a/:shorturl', function() {
-it('should redirect the url', function(done) {
-  chai.request(server)
-  .get('/a/0')
-  .end(function(err, res) {
-    res.should.have.status(200);
-    res.should.be.html;
+    res.body.should.have.property('count');
+    res.body.should.have.property('folder_id');
     done();
   });
 });
