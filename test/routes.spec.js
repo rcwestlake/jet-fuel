@@ -92,3 +92,26 @@ it('should post a new url to a folder', function(done) {
   });
 });
 });
+
+describe('PATCH /urls:folder_id/:urlKey', function() {
+it('should iterate the count for a given folder', function(done) {
+  chai.request(server)
+  .get('/urls/1/QwewTIlzP')
+  .end(function(err, res) {
+    res.should.have.status(200);
+    res.should.be.json;
+    res.body.should.be.a('object');
+    done();
+  });
+});
+});
+
+describe('GET /urls/:folder_id/:urlKey', function() {
+  it('should redirect to a new url', function(done){
+    chai.request(server)
+    .get('urls/1/QwewTIlzP')
+    .end(function(err, res) {
+      res.should.have.property('url');
+    })
+  })
+})
