@@ -28,8 +28,8 @@ class URL extends Component {
             {url.urlKey}
           </a>
         </p>
-        <p>Date Added: {moment(url.created_at).format('MMM DD YYYY')}</p>
-        <p>Popularity: {url.count}</p>
+        <p className="url-detail">Date Added: {moment(url.created_at).format('MMM DD YYYY')}</p>
+        <p className="url-detail">Popularity: {url.count}</p>
       </li>
     );
   }

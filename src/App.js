@@ -109,11 +109,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1 id="app-title">
-          WELCOME TO <span id="cursive">IRWIN</span> : <br /> YOUR FAVORITE URL SHORTENER
-        </h1>
+        <header>
+          <h1 id="app-title">
+            Welcome To <span>Irw.in:</span>
+          </h1>
+          <p id="tagline">Your favorite URL shortener</p>
+        </header>
 
-        <section>
+        <section className="input-container">
           <Input
             id="add-folder-input"
             btnid="add-folder-button"
@@ -148,7 +151,7 @@ class App extends Component {
         />
 
         {!selectedFolder.length ?
-          <div>
+          <div className="sort-container">
             <button
               className="sort-button"
               onClick={() => this.sortByPopularity()}

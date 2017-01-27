@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
+
+
 body {
-  /*font-family: 'Pacifico', cursive;
-  font-family: 'Rubik', sans-serif;*/
   background-color: #fafafa;
+  box-sizing: border-box;
 }
 
 /* SIDEBAR STYLING */
 aside {
-  font-family: 'Rubik', arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   font-weight: 500;
   color: white;
@@ -14,16 +21,25 @@ aside {
   overflow-y: scroll;
   width: 375px;
   min-height: 100vh;
-  background: -webkit-linear-gradient(#162831, #114E50);
-  background: -o-linear-gradient(#162831, #114E50);
-  background: linear-gradient(#162831, #114E50);
+  background: -webkit-linear-gradient(#162831, #2A394F);
+  background: -o-linear-gradient(#162831, #2A394F);
+  background: linear-gradient(#162831, #2A394F);
   border-right: 3px solid black;
 }
 
+a {
+  color: #15A4FA;
+  text-decoration: none;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+}
+
 #sidebar-title {
-  font-family: 'Pacifico', cursive;
-  letter-spacing: 1.5em;
-  padding: 5px 10px;
+  font-size: 25px;
+  letter-spacing: 0.75em;
+  padding: 15px 10px;
   cursor: pointer;
 }
 
@@ -35,17 +51,37 @@ aside {
 .folder {
   height: 35px;
   border-bottom: 2px solid white;
-  padding-top: 5px;
+  padding-top: 20px;
   cursor: pointer;
 }
 
-.folder:active, .active {
+.folder:active, .folder:hover, .active {
   transition: .4s ease-in-out;
   background-color: #F2F4F5;
-  color: #00B9A1
+  color: #00B9A1;
 }
+
 /* MAIN SECTION STYLING */
-section, #app-title, #urls-title, #urls {
+
+header {
+  background-color: #15A4FA;
+  position: fixed;
+  left: 375px;
+  padding: 20px;
+  height: 100px;
+  width: 100%;
+}
+#app-title {
+  display: block;
+  font-family: 'Pacifico', cursive;
+  font-size: 40px;
+}
+
+#tagline {
+  font-size: 25px;
+}
+
+#urls-title {
   display: block;
   position: fixed;
   left: 375px;
@@ -53,79 +89,98 @@ section, #app-title, #urls-title, #urls {
   width: 100%;
   padding: 20px;
 }
-.sort-button {
-  display: inline-block;
+
+.input-container {
+  display: block;
   position: fixed;
-  left: 1000px;
-  top: 340px;
-  cursor: pointer;
-  height: 50px;
-  width: 100px;
-  position: relative;
-  font-family: 'Rubik', sans-serif;
-  font-weight: 900;
-  font-size: 15px;
-}
-section {
+  left: 375px;
   top: 150px;
+  width: 100%;
 }
-#urls-title {
-  top: 250px;
-}
-#urls {
-  top: 330px;
-  height: auto;
-  border-top: 5px solid black;
+
+.input-and-btn {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin-left: 10px;
 }
 
 #add-folder-button, #add-url-button {
+  background-color: #0E7DBF;
+  border: none;
+  color: #fff;
   cursor: pointer;
   height: 58px;
-  width: 100px;
-  position: relative;
-  bottom: 13px;
-  font-family: 'Rubik', sans-serif;
-  font-weight: 900;
+  width: 220px;
+  font-weight: bold;
   font-size: 20px;
+  margin-left: 10px;
 }
+
 
 #add-url-button:disabled {
   cursor: not-allowed;
 }
 
 #add-folder-input, #add-url-input {
-  padding: 15px;
+  padding: 15px 0px;
   outline-color: #00B9A1;
-  font-family: 'Rubik', sans-serif;
   font-size: 20px;
+  width: 350px;
 }
-#add-folder-input {
-  width: 150px;
-}
+
 #add-url-input {
   margin-left: 20px;
 }
+
+.sort-container {
+  position: fixed;
+  left: 750px;
+  top: 340px;
+  width: 700px;
+}
+
+.sort-button {
+  cursor: pointer;
+  background-color: #0E7DBF;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 45px;
+  width: 130px;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+#urls-title {
+  top: 250px;
+}
+
+#urls {
+  top: 370px;
+  position: fixed;
+  left: 415px;
+  height: 100px;
+  width: 100%;
+}
+
 .url {
   cursor: pointer;
-  font-family: 'Rubik', sans-serif;
   font-weight: 900;
   font-size: 30px;
 }
-#urls-title, #cursive {
+
+.url-detail {
+  margin-left: 20px;
+}
+
+#urls-title {
   font-family: 'Pacifico', cursive;
   font-size: 40px;
-  letter-spacing: 1em;
+  letter-spacing: 0.5em;
 }
-#cursive {
-  margin-left: 5px;
-}
+
 #urls-title {
-  border-top: 5px solid black;
-}
-#app-title {
-  font-family: 'Rubik', sans-serif;
-  font-weight: 900;
-  font-size: 40px;
-  border-top: 5px solid black;
-  border-bottom: 5px solid black;
+  border-top: 2px solid black;
 }
