@@ -58,18 +58,15 @@ class App extends Component {
     const folder_id = this.state.selectedFolder[0]
     const url = this.state.urlInput
 
-    if (/^(?:(ftp|http|https):\/\/)?(?:[\w-]+\.)+[a-z]{3,6}$/.test(url)) {
-      console.log('passed')
-    } else {
+    if (!/^(?:(ftp|http|https):\/\/)?(?:[\w-]+\.)+[a-z]{3,6}$/.test(url)) {
       alert('Enter a valid URL')
       return
     }
 
     axios.post((`http://localhost:3001/urls/${folder_id}`), { url })
     .then((response) => {
-      this.state.urls.push(response.data)
       this.setState({
-        urls: this.state.urls,
+        urls: response.data,
       })
     })
     .then(() => {
@@ -104,11 +101,11 @@ class App extends Component {
   sortByPopularity() {
     const urls = this.state.urls
     if (this.state.sortKey !== 'popdesc') {
-      urls.sort((a,b) => { return b.count - a.count })
-      this.setState({ urls: urls, sortKey: 'popdesc' })
+      urls.sort((a, b) => { return b.count - a.count })
+      this.setState({ urls, sortKey: 'popdesc' })
     } else {
-      urls.sort((a,b) => { return a.count - b.count })
-      this.setState({ urls: urls, sortKey: 'popasc' })
+      urls.sort((a, b) => { return a.count - b.count })
+      this.setState({ urls, sortKey: 'popasc' })
     }
   }
 
