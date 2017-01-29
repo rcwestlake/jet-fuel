@@ -1,126 +1,151 @@
-const checkIfExists = require('./helpers/server-helpers')
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
+const express = require('express')
+
+const app = express()
 const bodyParser = require('body-parser');
-const md5 = require('md5');
+const shortid = require('shortid');
+const checkIfExists = require('./helpers/server-helpers');
+const path = require('path')
 
 app.set('port', process.env.PORT || 3001);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH')
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
 
-app.locals.folders = [
-  {
-    id: 1,
-    title: 'sports'
-  },
-  {
-    id: 2,
-    title: 'news'
-  }
-]
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
-app.locals.urls = [
-  {
-    urlKey: '1235jdflkas;',
-    url: 'www.espn.com',
-    date: '21234333',
-    count: 0,
-    folder_id: 1
-  },
-  {
-    urlKey: '900920sdhkf;',
-    url: 'www.football.com',
-    date: '3903393',
-    count: 0,
-    folder_id: 1
-  },
-  {
-    urlKey: '9938dfnkasla;',
-    url: 'www.fox.com',
-    date: '4848444',
-    count: 0,
-    folder_id: 2
-  },
-  {
-    urlKey: '7383jadfs;',
-    url: 'www.cnn.com',
-    date: '13930303',
-    count: 0,
-    folder_id: 2
-  }
-]
+
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('../knexfile')[environment];
+const database = require('knex')(configuration);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Welcome to Irwin');
 });
 
 app.get('/folders', (req, res) => {
-  res.json(app.locals.folders)
-});
+  database('folders').select()
+    .then((folders) => {
+      res.status(200).json(folders);
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
+})
 
 app.post('/folders', (req, res) => {
   const { title } = req.body
-  const uid = app.locals.folders.length + 1
-  console.log(uid)
-  app.locals.folders[uid] = { uid, title }
-
-  res.json({ uid, title })
-})
-
-app.get('/urls', (req, res) => {
-  res.json(app.locals.urls)
-})
-
-app.get('/urls/:id', (req, res) => {
-  const { id } = req.params
-  const urls = app.locals.urls.filter(url => {
-    return url.folder_id == id
+  database('folders').insert({ title })
+  .then(() => {
+    database('folders').select()
+      .then((folders) => {
+        res.status(200).json(folders);
+      })
+      .catch((error) => {
+        console.error('error in post request', error)
+        res.sendStatus(404)
+      });
   })
-
-  res.json(urls)
 })
 
 app.get('/folders/:id', (req, res) => {
   const { id } = req.params
-  const folder = app.locals.folders.filter((folder) => {
-     return folder.id == id
-  })
 
-  if(!folder.length) {
-    res.sendStatus(404)
-  }
-
-  res.json(folder)
+  database('folders').where('id', id).select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
-app.post('/folders/:name', (req, res) => {
-  const { name } = req.params
+app.get('/urls', (req, res) => {
+  database('urls').select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
+})
+
+app.get('/urls/:folder_id', (req, res) => {
+  const { folder_id } = req.params
+  database('urls').where('folder_id', folder_id).select()
+    .then((response) => {
+      if (!response.length) res.sendStatus(404)
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
+})
+
+app.post('/urls/:folder_id', (req, res) => {
+  const { folder_id } = req.params
   const { url } = req.body
-  const date = Date.now()
   const count = 0
+  const urlKey = `irw.in-${shortid.generate()}`
 
-  const urlKey = md5(url)
-  const folder = app.locals.folders[name]
-
-  checkIfExists(folder, url, res)
-
-  const shortURL = app.locals.folders[name][urlKey] = [{ url, date, count }]
-
-  res.json({ urlKey, shortURL })
+  database('urls').insert({ urlKey, url, count, folder_id })
+    .then(() => {
+      database('urls').select()
+      .then((urls) => {
+        res.status(200).json(urls)
+      })
+      .catch((error) => {
+        console.error('error in post request', error)
+        res.sendStatus(404)
+      })
+    })
 })
 
-app.patch('/folders/:name/:urlKey', (req, res) => {
-  const { name, urlKey } = req.params
-  const shortURL = app.locals.folders[name][urlKey]
-  const count = shortURL[0].count++
-  const url = shortURL[0].url
+app.patch('/urls/:folder_id/:urlKey', (req, res) => {
+  const { urlKey } = req.params
+  database('urls').where('urlKey', urlKey)
+    .increment('count', 1)
+    .then(() => {
+      database('urls').select()
+      .then((urls) => {
+        res.status(200).json({ urls })
+      })
+    })
+    .catch((error) => {
+      console.error('error with patch request', error)
+    })
+})
 
-  res.json(url)
+app.get('/urls/:folder_id/:urlKey', (req, res) => {
+  const { urlKey } = req.params
+  database('urls').where('urlKey', urlKey).select()
+    .then((response) => {
+      res.redirect(`http://${response.url}`);
+    })
+    .catch((error) => {
+      console.error('error in get request', error)
+      res.sendStatus(404)
+    })
 })
 
 app.listen(app.get('port'), () => {
-  console.log('Example app listening on port 3001!');
-});
+  console.log('Jet-fuel app listening on port 3001!');
+})
+
+module.exports = app

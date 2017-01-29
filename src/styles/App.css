@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
+
+
+body {
+  background-color: #fafafa;
+  box-sizing: border-box;
+}
+
+/* SIDEBAR STYLING */
+aside {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  position: fixed;
+  overflow-y: scroll;
+  width: 375px;
+  min-height: 100vh;
+  background: -webkit-linear-gradient(#162831, #2A394F);
+  background: -o-linear-gradient(#162831, #2A394F);
+  background: linear-gradient(#162831, #2A394F);
+  border-right: 3px solid black;
+}
+
+a {
+  color: #15A4FA;
+  text-decoration: none;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+}
+
+#sidebar-title {
+  font-size: 25px;
+  letter-spacing: 0.75em;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+
+#folders {
+  padding: 20px;
+  text-transform: uppercase;
+}
+
+.folder {
+  height: 35px;
+  border-bottom: 2px solid white;
+  padding-top: 20px;
+  cursor: pointer;
+}
+
+.folder:active, .folder:hover, .active {
+  transition: .4s ease-in-out;
+  background-color: #F2F4F5;
+  color: #00B9A1;
+}
+
+/* MAIN SECTION STYLING */
+
+header {
+  background-color: #15A4FA;
+  position: fixed;
+  left: 375px;
+  padding: 20px;
+  height: 100px;
+  width: 100%;
+}
+#app-title {
+  display: block;
+  font-family: 'Pacifico', cursive;
+  font-size: 40px;
+}
+
+#tagline {
+  font-size: 25px;
+}
+
+#urls-title {
+  display: block;
+  position: fixed;
+  left: 375px;
+  height: 100px;
+  width: 100%;
+  padding: 20px;
+}
+
+.input-container {
+  display: block;
+  position: fixed;
+  left: 375px;
+  top: 150px;
+  width: 100%;
+}
+
+.input-and-btn {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin-left: 10px;
+}
+
+#add-folder-button, #add-url-button {
+  background-color: #0E7DBF;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 58px;
+  width: 150px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+
+#add-url-button:disabled {
+  cursor: not-allowed;
+}
+
+#add-folder-input, #add-url-input {
+  padding: 15px 0px;
+  outline-color: #00B9A1;
+  font-size: 20px;
+  width: 220px;
+}
+
+#add-url-input {
+  margin-left: 20px;
+  width: 320px;
+}
+
+.sort-container {
+  position: fixed;
+  left: 750px;
+  top: 340px;
+  width: 700px;
+}
+
+.sort-button {
+  cursor: pointer;
+  background-color: #0E7DBF;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 45px;
+  width: 130px;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+#urls-title {
+  top: 250px;
+}
+
+#urls {
+  top: 370px;
+  position: fixed;
+  left: 415px;
+  height: 100px;
+  width: 100%;
+}
+
+.url {
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 30px;
+}
+
+.url-detail {
+  margin-left: 20px;
+}
+
+#urls-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 40px;
+  letter-spacing: 0.5em;
+}
+
+#urls-title {
+  border-top: 2px solid black;
+}
