@@ -1,5 +1,6 @@
 # jet-fuel
-URL shortener build with Node, React and a PostgreSQL.
+URL shortener build with Node, React and PostgreSQL.
+
 Also, we named our app Irwin, simply because it's a great name. Cheers!
 
 [Project Spec](http://frontend.turing.io/projects/jet-fuel.html)
